@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 )
 
 const (
@@ -67,12 +66,12 @@ func (parser *parserState) getToken() int {
 }
 
 func (parser *parserState) match(t int) {
-	fmt.Printf("Expected token, expected: %s found: %s\n", tokToString(t), tokToString(parser.currentToken))
 	if parser.currentToken == t {
+		fmt.Printf("Expected token, expected: %s found: %s\n", tokToString(t), tokToString(parser.currentToken))
 		parser.currentToken = parser.getToken()
 	} else {
 		parser.parseOK = false
-		log.Fatalf("Unexpected token, expected: %d, found: %d", tokToString(t), tokToString(parser.currentToken))
+		fmt.Printf("Unexpected token, expected: %s, found: %s\n", tokToString(t), tokToString(parser.currentToken))
 	}
 }
 
@@ -90,6 +89,44 @@ func (parser *parserState) cvName() {
 	parser.match(T_SCOLON)
 }
 
+// func (parser *parserState) cvEmail() {
+// 	fmt.Println("in cvemail")
+// 	parser.match(T_EMAIL)
+// 	parser.match(T_ID)
+// 	parser.match(T_SCOLON)
+// }
+
+// func (parser *parserState) cvPhoto() {
+// 	fmt.Println("in cvemail")
+// 	parser.match(T_PHOTO)
+// 	parser.match(T_ID)
+// 	parser.match(T_SCOLON)
+// }
+
+// func (parser *parserState) cvPaperSize() {
+// 	fmt.Println("in cvemail")
+// 	parser.match(T_PAPER_SIZE)
+// 	parser.match(T_ID)
+// 	parser.match(T_SCOLON)
+// }
+
+func (parser *parserState) parse() bool {
+	parser.cvHeader()
+	for parser.currentToken != T_EOF {
+		switch parser.currentToken {
+		case T_NAME:
+			parser.cvName()
+		case T_EMAIL:
+			parser.cvName()
+		case T_PHOTO:
+			parser.cvName()
+		case T_PAPER_SIZE:
+			parser.cvName()
+		}
+	}
+	return parser.parseOK
+}
+
 // Parsed data structure
 type CV struct {
 	Name      string
@@ -101,9 +138,7 @@ type CV struct {
 
 func main() {
 	pp := newParser([]int{T_CV, T_ID, T_SCOLON, T_NAME, T_ID, T_SCOLON})
-	pp.cvHeader()
-	pp.cvName()
-	if pp.parseOK {
+	if pp.parse() {
 		fmt.Println("OK")
 	} else {
 		fmt.Println("FAILURE")
