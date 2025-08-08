@@ -10,9 +10,10 @@ import (
 )
 
 const (
-	_ = iota
-	T_NAME
+	_      = iota
+	T_NAME = 257 + iota
 	T_ID
+	T_NUMBER
 	T_EMAIL
 	T_PHOTO
 	T_PAPER_SIZE
@@ -21,13 +22,16 @@ const (
 	T_SCOLON
 	T_EOF
 	T_UNDEF
+	T_ERROR
 )
 
 const NOT_FOUND = -1
 
 var tokentab map[string]int = map[string]int{
 	"id":     T_ID,
+	"number": T_NUMBER,
 	"text":   T_TEXT,
+	"error":  T_ERROR,
 	";":      T_SCOLON,
 	"undef":  T_UNDEF,
 	"TERROR": NOT_FOUND,
@@ -59,10 +63,10 @@ func lex2tok(lex string) int {
 	return T_ID // ?, jag översätter ju bara gammal c kod men still
 }
 
-func key2tok(lex string) int {
+func key2tok(lex string) rune {
 	val, ok := keywordtab[lex]
 	if ok {
-		return val
+		return rune(val)
 	}
 	return T_ID
 }
@@ -82,16 +86,16 @@ func tok2lex(tok int) string {
 }
 
 type parserState struct {
-	currentToken int // lookahead
+	currentToken rune // lookahead
 	parseOK      bool
-	tokens       []int
+	tokens       []rune
 	indexToken   int
-	lexemes      []int
+	lexemes      map[int]string
 	indexLexeme  int
 }
 
 func newParser(path string) parserState {
-	p := parserState{indexToken: 0, parseOK: true}
+	p := parserState{indexToken: 0, parseOK: true, lexemes: make(map[int]string)}
 	p.loadCV(path)
 	p.currentToken = p.getToken()
 	return p
@@ -114,42 +118,58 @@ func (parser *parserState) loadCV(path string) {
 			log.Fatal("Error reading jxb", err)
 		}
 		fmt.Printf("%c\n", c)
-		cint := int(c)
-		parser.tokens = append(parser.tokens, cint)
+		parser.tokens = append(parser.tokens, c)
 	}
-	parser.tokens = append(parser.tokens, 0)
+	parser.tokens = append(parser.tokens, T_EOF)
 	parser.indexToken = 0
 }
 
-func (parser *parserState) getToken() int {
-	if parser.indexToken >= len(parser.tokens) {
-		return T_EOF
-	}
+func (parser *parserState) getChar() {
+	parser.lexemes[parser.indexLexeme] += string(parser.tokens[parser.indexToken])
+	parser.indexToken++
+}
 
-	for parser.tokens[parser.indexToken] != 0 {
+func (parser *parserState) getToken() rune {
+	// if parser.indexToken >= len(parser.tokens) {
+	// 	return T_EOF
+	// }
+
+	for parser.tokens[parser.indexToken] != T_EOF {
 		parser.indexLexeme = 0
-		if unicode.IsSpace(rune(parser.tokens[parser.indexToken])) {
+		if unicode.IsSpace(parser.tokens[parser.indexToken]) {
 			parser.indexToken++
-		} else if unicode.IsLetter(rune(parser.tokens[parser.indexToken])) {
-			for unicode.IsLetter(rune(parser.tokens[parser.indexToken])) || unicode.IsDigit(rune(parser.tokens[parser.indexToken])) {
-				// getChar()
+		} else if unicode.IsLetter(parser.tokens[parser.indexToken]) {
+			for unicode.IsLetter(parser.tokens[parser.indexToken]) || unicode.IsDigit(parser.tokens[parser.indexToken]) {
+				parser.getChar()
 			}
-			parser.lexemes[parser.indexLexeme] = 0
-			return key2tok(parser.lexemes)
+			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			parser.indexLexeme++
+			return key2tok(parser.lexemes[parser.indexLexeme])
+		} else if unicode.IsDigit(parser.tokens[parser.indexToken]) {
+			for unicode.IsDigit(parser.tokens[parser.indexToken]) {
+				parser.getChar()
+			}
+			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			parser.indexLexeme++
+			return T_NUMBER
+		} else {
+			parser.getChar()
+			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			parser.indexLexeme++
+			return rune(lex2tok(parser.lexemes[parser.indexLexeme]))
 		}
 	}
-	tok := parser.tokens[parser.indexToken]
-	parser.indexToken++
-	return tok
+	return T_ERROR
 }
 
 func (parser *parserState) match(t int) {
-	if parser.currentToken == t {
-		fmt.Printf("Expected token, expected: %s found: %s\n", tok2lex(t), tok2lex(parser.currentToken))
+	fmt.Printf("%s\n", tok2lex(t))
+	if parser.currentToken == rune(t) {
+		fmt.Printf("Expected token, expected: %s found: %s\n", tok2lex(t), tok2lex(int(parser.currentToken)))
 		parser.currentToken = parser.getToken()
 	} else {
 		parser.parseOK = false
-		fmt.Printf("Unexpected token, expected: %s, found: %s\n", tok2lex(t), tok2lex(parser.currentToken))
+		fmt.Printf("Unexpected token, expected: %s, found: %s\n", tok2lex(t), tok2lex(int(parser.currentToken)))
 	}
 }
 
@@ -167,26 +187,26 @@ func (parser *parserState) cvName() {
 	parser.match(T_SCOLON)
 }
 
-// func (parser *parserState) cvEmail() {
-// 	fmt.Println("in cvemail")
-// 	parser.match(T_EMAIL)
-// 	parser.match(T_ID)
-// 	parser.match(T_SCOLON)
-// }
+func (parser *parserState) cvEmail() {
+	fmt.Println("in cvemail")
+	parser.match(T_EMAIL)
+	parser.match(T_ID)
+	parser.match(T_SCOLON)
+}
 
-// func (parser *parserState) cvPhoto() {
-// 	fmt.Println("in cvemail")
-// 	parser.match(T_PHOTO)
-// 	parser.match(T_ID)
-// 	parser.match(T_SCOLON)
-// }
+func (parser *parserState) cvPhoto() {
+	fmt.Println("in cvemail")
+	parser.match(T_PHOTO)
+	parser.match(T_ID)
+	parser.match(T_SCOLON)
+}
 
-// func (parser *parserState) cvPaperSize() {
-// 	fmt.Println("in cvemail")
-// 	parser.match(T_PAPER_SIZE)
-// 	parser.match(T_ID)
-// 	parser.match(T_SCOLON)
-// }
+func (parser *parserState) cvPaperSize() {
+	fmt.Println("in cvemail")
+	parser.match(T_PAPER_SIZE)
+	parser.match(T_ID)
+	parser.match(T_SCOLON)
+}
 
 func (parser *parserState) parse() bool {
 	parser.cvHeader()
@@ -195,11 +215,13 @@ func (parser *parserState) parse() bool {
 		case T_NAME:
 			parser.cvName()
 		case T_EMAIL:
-			parser.cvName()
+			parser.cvEmail()
 		case T_PHOTO:
-			parser.cvName()
+			parser.cvPhoto()
 		case T_PAPER_SIZE:
-			parser.cvName()
+			parser.cvPaperSize()
+		default:
+			return false
 		}
 	}
 	return parser.parseOK
