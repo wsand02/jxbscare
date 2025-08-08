@@ -135,28 +135,29 @@ func (parser *parserState) getToken() rune {
 	// }
 
 	for parser.tokens[parser.indexToken] != T_EOF {
-		parser.indexLexeme = 0
 		if unicode.IsSpace(parser.tokens[parser.indexToken]) {
 			parser.indexToken++
 		} else if unicode.IsLetter(parser.tokens[parser.indexToken]) {
 			for unicode.IsLetter(parser.tokens[parser.indexToken]) || unicode.IsDigit(parser.tokens[parser.indexToken]) {
 				parser.getChar()
 			}
-			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			lex := parser.lexemes[parser.indexLexeme]
+			fmt.Printf("IsLetter: %s\n", lex)
 			parser.indexLexeme++
-			return key2tok(parser.lexemes[parser.indexLexeme])
+			return key2tok(lex)
 		} else if unicode.IsDigit(parser.tokens[parser.indexToken]) {
 			for unicode.IsDigit(parser.tokens[parser.indexToken]) {
 				parser.getChar()
 			}
-			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			fmt.Printf("IsDigit: %s\n", parser.lexemes[parser.indexLexeme])
 			parser.indexLexeme++
 			return T_NUMBER
 		} else {
 			parser.getChar()
-			fmt.Printf("%s\n", parser.lexemes[parser.indexLexeme])
+			lex := parser.lexemes[parser.indexLexeme]
+			fmt.Printf("Misc: %s\n", lex)
 			parser.indexLexeme++
-			return rune(lex2tok(parser.lexemes[parser.indexLexeme]))
+			return rune(lex2tok(lex))
 		}
 	}
 	return T_ERROR
@@ -210,20 +211,22 @@ func (parser *parserState) cvPaperSize() {
 
 func (parser *parserState) parse() bool {
 	parser.cvHeader()
-	for parser.currentToken != T_EOF {
-		switch parser.currentToken {
-		case T_NAME:
-			parser.cvName()
-		case T_EMAIL:
-			parser.cvEmail()
-		case T_PHOTO:
-			parser.cvPhoto()
-		case T_PAPER_SIZE:
-			parser.cvPaperSize()
-		default:
-			return false
-		}
-	}
+	parser.cvName()
+	// något likt var dec list kanske?
+	// for parser.currentToken != T_EOF {
+	// 	switch parser.currentToken {
+	// 	case T_NAME:
+	// 		parser.cvName()
+	// 	case T_EMAIL:
+	// 		parser.cvEmail()
+	// 	case T_PHOTO:
+	// 		parser.cvPhoto()
+	// 	case T_PAPER_SIZE:
+	// 		parser.cvPaperSize()
+	// 	default:
+	// 		continue
+	// 	}
+	// }
 	return parser.parseOK
 }
 
