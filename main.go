@@ -1,7 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"log"
+	"os"
+	"unicode"
 )
 
 const (
@@ -18,60 +23,133 @@ const (
 	T_UNDEF
 )
 
-func tokToString(t int) string {
-	switch t {
-	case 1:
-		return "T_NAME"
-	case 2:
-		return "T_ID"
-	case 3:
-		return "T_EMAIL"
-	case 4:
-		return "T_PHOTO"
-	case 5:
-		return "T_PAPER_SIZE"
-	case 6:
-		return "T_CV"
-	case 7:
-		return "T_TEXT"
-	case 8:
-		return "T_SCOLON"
-	case 9:
-		return "T_EOF"
-	default:
-		return "T_UNDEF"
+const NOT_FOUND = -1
+
+var tokentab map[string]int = map[string]int{
+	"id":     T_ID,
+	"text":   T_TEXT,
+	";":      T_SCOLON,
+	"undef":  T_UNDEF,
+	"TERROR": NOT_FOUND,
+}
+
+var keywordtab map[string]int = map[string]int{
+	"name":      T_NAME,
+	"email":     T_EMAIL,
+	"photo":     T_PHOTO,
+	"papersize": T_PAPER_SIZE,
+	"cv":        T_CV,
+	"KERROR":    NOT_FOUND,
+}
+
+// type tab struct {
+// 	text  string
+// 	token int
+// }
+
+func lex2tok(lex string) int {
+	val, ok := keywordtab[lex]
+	if ok {
+		return val
 	}
+	val, ok = tokentab[lex]
+	if ok {
+		return val
+	}
+	return T_ID // ?, jag översätter ju bara gammal c kod men still
+}
+
+func key2tok(lex string) int {
+	val, ok := keywordtab[lex]
+	if ok {
+		return val
+	}
+	return T_ID
+}
+
+func tok2lex(tok int) string {
+	for k, v := range keywordtab {
+		if v == tok {
+			return k
+		}
+	}
+	for k, v := range tokentab {
+		if v == tok {
+			return k
+		}
+	}
+	return "TERROR"
 }
 
 type parserState struct {
-	currentToken int
+	currentToken int // lookahead
 	parseOK      bool
 	tokens       []int
-	index        int
+	indexToken   int
+	lexemes      []int
+	indexLexeme  int
 }
 
-func newParser(tt []int) parserState {
-	p := parserState{index: 0, parseOK: true, tokens: tt}
+func newParser(path string) parserState {
+	p := parserState{indexToken: 0, parseOK: true}
+	p.loadCV(path)
 	p.currentToken = p.getToken()
 	return p
 }
 
+func (parser *parserState) loadCV(path string) {
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal("Failed to open jxb")
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+	for {
+		c, _, err := reader.ReadRune()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			log.Fatal("Error reading jxb", err)
+		}
+		fmt.Printf("%c\n", c)
+		cint := int(c)
+		parser.tokens = append(parser.tokens, cint)
+	}
+	parser.tokens = append(parser.tokens, 0)
+	parser.indexToken = 0
+}
+
 func (parser *parserState) getToken() int {
-	if parser.index >= len(parser.tokens) {
+	if parser.indexToken >= len(parser.tokens) {
 		return T_EOF
 	}
-	tok := parser.tokens[parser.index]
-	parser.index++
+
+	for parser.tokens[parser.indexToken] != 0 {
+		parser.indexLexeme = 0
+		if unicode.IsSpace(rune(parser.tokens[parser.indexToken])) {
+			parser.indexToken++
+		} else if unicode.IsLetter(rune(parser.tokens[parser.indexToken])) {
+			for unicode.IsLetter(rune(parser.tokens[parser.indexToken])) || unicode.IsDigit(rune(parser.tokens[parser.indexToken])) {
+				// getChar()
+			}
+			parser.lexemes[parser.indexLexeme] = 0
+			return key2tok(parser.lexemes)
+		}
+	}
+	tok := parser.tokens[parser.indexToken]
+	parser.indexToken++
 	return tok
 }
 
 func (parser *parserState) match(t int) {
 	if parser.currentToken == t {
-		fmt.Printf("Expected token, expected: %s found: %s\n", tokToString(t), tokToString(parser.currentToken))
+		fmt.Printf("Expected token, expected: %s found: %s\n", tok2lex(t), tok2lex(parser.currentToken))
 		parser.currentToken = parser.getToken()
 	} else {
 		parser.parseOK = false
-		fmt.Printf("Unexpected token, expected: %s, found: %s\n", tokToString(t), tokToString(parser.currentToken))
+		fmt.Printf("Unexpected token, expected: %s, found: %s\n", tok2lex(t), tok2lex(parser.currentToken))
 	}
 }
 
@@ -137,7 +215,7 @@ type CV struct {
 }
 
 func main() {
-	pp := newParser([]int{T_CV, T_ID, T_SCOLON, T_NAME, T_ID, T_SCOLON})
+	pp := newParser("./aboow.jxb")
 	if pp.parse() {
 		fmt.Println("OK")
 	} else {
