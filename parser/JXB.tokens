@@ -1,0 +1,10 @@
+BEGIN=1
+END=2
+INSERT=3
+KEYWORD=4
+STRING=5
+WS=6
+NL=7
+'begin'=1
+'end'=2
+'insert'=3
