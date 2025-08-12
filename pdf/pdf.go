@@ -3,10 +3,13 @@ package pdf
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/wsand02/jxbscare/parser"
 )
+
+var CVData map[string]string = make(map[string]string)
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
@@ -16,8 +19,20 @@ func NewTreeShapeListener() *TreeShapeListener {
 	return new(TreeShapeListener)
 }
 
-func (this *TreeShapeListener) EnterEveryRule(ctx antlr.ParserRuleContext) {
-	fmt.Println(ctx.GetText())
+func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
+	ass := ctx.KEYWORD().GetText()
+	fmt.Println(ass)
+	sb := strings.Builder{}
+	for idx, val := range ctx.AllSTRING() {
+		fmt.Printf(" %s ", val)
+		sb.WriteString(val.GetText())
+		if idx < len(ctx.AllSTRING())-1 {
+			sb.WriteString(" ")
+		}
+	}
+	CVData[ass] = sb.String()
+	fmt.Println()
+	fmt.Println(CVData[ass])
 }
 
 func Laboutonmaxxadlatte() {
