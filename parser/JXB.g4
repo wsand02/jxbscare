@@ -16,6 +16,7 @@ block
   ;
 insert
   : INSERT KEYWORD NL
+  | INSERT STRING NL
   ;
 
 BEGIN
@@ -37,7 +38,6 @@ KEYWORD
   | 'email'
   | 'website'
   | 'title'
-  | 'contact'
   ;
 
 fragment ALPHA

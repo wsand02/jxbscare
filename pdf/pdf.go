@@ -6,21 +6,35 @@ import (
 	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
+	"github.com/johnfercher/maroto/v2"
+	"github.com/johnfercher/maroto/v2/pkg/core"
 	"github.com/wsand02/jxbscare/parser"
 )
 
-var CVData map[string]string = make(map[string]string)
+type Aboowlock struct {
+	Data  string
+	Child *Aboowlock
+}
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
+	CVData map[string]string
+	Blocks []Aboowlock
+	PPdf   core.Maroto
 }
 
 func NewTreeShapeListener() *TreeShapeListener {
-	return new(TreeShapeListener)
+	tsl := new(TreeShapeListener)
+	tsl.CVData = make(map[string]string)
+	tsl.Blocks = []Aboowlock{}
+	tsl.PPdf = maroto.New()
+	return tsl
 }
 
 func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
+	fmt.Println("IN ENTER ASSIGNMENT")
 	ass := ctx.KEYWORD().GetText()
+	ctx.GetInvokingState()
 	fmt.Println(ass)
 	sb := strings.Builder{}
 	for idx, val := range ctx.AllSTRING() {
@@ -30,9 +44,23 @@ func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 			sb.WriteString(" ")
 		}
 	}
-	CVData[ass] = sb.String()
+	tsl.CVData[ass] = sb.String()
 	fmt.Println()
-	fmt.Println(CVData[ass])
+	fmt.Println(tsl.CVData[ass])
+}
+
+func (tsl *TreeShapeListener) EnterBlock(ctx *parser.BlockContext) {
+	fmt.Printf("IN BLOCK %s\n", ctx.STRING(0).GetText())
+	fmt.Println("BLOCK CONTENTS: ")
+	if len(ctx.AllStatement()) <= 0 {
+		return
+	}
+	for _, val := range ctx.AllStatement() {
+		fmt.Println(val.GetText())
+		if val.Block() != nil {
+			fmt.Println("BLOCK IN BLOCK WOAH")
+		}
+	}
 }
 
 func Laboutonmaxxadlatte() {
