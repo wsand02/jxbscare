@@ -43,25 +43,27 @@ func jxbParserInit() {
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 7, 50, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4,
+		4, 1, 7, 54, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4,
 		1, 0, 5, 0, 12, 8, 0, 10, 0, 12, 0, 15, 9, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1,
 		1, 3, 1, 22, 8, 1, 1, 2, 1, 2, 5, 2, 26, 8, 2, 10, 2, 12, 2, 29, 9, 2,
 		1, 2, 1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 37, 8, 3, 10, 3, 12, 3, 40, 9,
-		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 0, 0, 5, 0, 2,
-		4, 6, 8, 0, 0, 49, 0, 13, 1, 0, 0, 0, 2, 21, 1, 0, 0, 0, 4, 23, 1, 0, 0,
-		0, 6, 32, 1, 0, 0, 0, 8, 45, 1, 0, 0, 0, 10, 12, 3, 2, 1, 0, 11, 10, 1,
-		0, 0, 0, 12, 15, 1, 0, 0, 0, 13, 11, 1, 0, 0, 0, 13, 14, 1, 0, 0, 0, 14,
-		16, 1, 0, 0, 0, 15, 13, 1, 0, 0, 0, 16, 17, 5, 0, 0, 1, 17, 1, 1, 0, 0,
-		0, 18, 22, 3, 4, 2, 0, 19, 22, 3, 6, 3, 0, 20, 22, 3, 8, 4, 0, 21, 18,
-		1, 0, 0, 0, 21, 19, 1, 0, 0, 0, 21, 20, 1, 0, 0, 0, 22, 3, 1, 0, 0, 0,
-		23, 27, 5, 4, 0, 0, 24, 26, 5, 5, 0, 0, 25, 24, 1, 0, 0, 0, 26, 29, 1,
-		0, 0, 0, 27, 25, 1, 0, 0, 0, 27, 28, 1, 0, 0, 0, 28, 30, 1, 0, 0, 0, 29,
-		27, 1, 0, 0, 0, 30, 31, 5, 7, 0, 0, 31, 5, 1, 0, 0, 0, 32, 33, 5, 1, 0,
-		0, 33, 34, 5, 5, 0, 0, 34, 38, 5, 7, 0, 0, 35, 37, 3, 2, 1, 0, 36, 35,
-		1, 0, 0, 0, 37, 40, 1, 0, 0, 0, 38, 36, 1, 0, 0, 0, 38, 39, 1, 0, 0, 0,
-		39, 41, 1, 0, 0, 0, 40, 38, 1, 0, 0, 0, 41, 42, 5, 2, 0, 0, 42, 43, 5,
-		5, 0, 0, 43, 44, 5, 7, 0, 0, 44, 7, 1, 0, 0, 0, 45, 46, 5, 3, 0, 0, 46,
-		47, 5, 4, 0, 0, 47, 48, 5, 7, 0, 0, 48, 9, 1, 0, 0, 0, 4, 13, 21, 27, 38,
+		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 3, 4, 52,
+		8, 4, 1, 4, 0, 0, 5, 0, 2, 4, 6, 8, 0, 0, 54, 0, 13, 1, 0, 0, 0, 2, 21,
+		1, 0, 0, 0, 4, 23, 1, 0, 0, 0, 6, 32, 1, 0, 0, 0, 8, 51, 1, 0, 0, 0, 10,
+		12, 3, 2, 1, 0, 11, 10, 1, 0, 0, 0, 12, 15, 1, 0, 0, 0, 13, 11, 1, 0, 0,
+		0, 13, 14, 1, 0, 0, 0, 14, 16, 1, 0, 0, 0, 15, 13, 1, 0, 0, 0, 16, 17,
+		5, 0, 0, 1, 17, 1, 1, 0, 0, 0, 18, 22, 3, 4, 2, 0, 19, 22, 3, 6, 3, 0,
+		20, 22, 3, 8, 4, 0, 21, 18, 1, 0, 0, 0, 21, 19, 1, 0, 0, 0, 21, 20, 1,
+		0, 0, 0, 22, 3, 1, 0, 0, 0, 23, 27, 5, 4, 0, 0, 24, 26, 5, 5, 0, 0, 25,
+		24, 1, 0, 0, 0, 26, 29, 1, 0, 0, 0, 27, 25, 1, 0, 0, 0, 27, 28, 1, 0, 0,
+		0, 28, 30, 1, 0, 0, 0, 29, 27, 1, 0, 0, 0, 30, 31, 5, 7, 0, 0, 31, 5, 1,
+		0, 0, 0, 32, 33, 5, 1, 0, 0, 33, 34, 5, 5, 0, 0, 34, 38, 5, 7, 0, 0, 35,
+		37, 3, 2, 1, 0, 36, 35, 1, 0, 0, 0, 37, 40, 1, 0, 0, 0, 38, 36, 1, 0, 0,
+		0, 38, 39, 1, 0, 0, 0, 39, 41, 1, 0, 0, 0, 40, 38, 1, 0, 0, 0, 41, 42,
+		5, 2, 0, 0, 42, 43, 5, 5, 0, 0, 43, 44, 5, 7, 0, 0, 44, 7, 1, 0, 0, 0,
+		45, 46, 5, 3, 0, 0, 46, 47, 5, 4, 0, 0, 47, 52, 5, 7, 0, 0, 48, 49, 5,
+		3, 0, 0, 49, 50, 5, 5, 0, 0, 50, 52, 5, 7, 0, 0, 51, 45, 1, 0, 0, 0, 51,
+		48, 1, 0, 0, 0, 52, 9, 1, 0, 0, 0, 5, 13, 21, 27, 38, 51,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -826,6 +828,7 @@ type IInsertContext interface {
 	INSERT() antlr.TerminalNode
 	KEYWORD() antlr.TerminalNode
 	NL() antlr.TerminalNode
+	STRING() antlr.TerminalNode
 
 	// IsInsertContext differentiates from other interfaces.
 	IsInsertContext()
@@ -875,6 +878,10 @@ func (s *InsertContext) NL() antlr.TerminalNode {
 	return s.GetToken(JXBParserNL, 0)
 }
 
+func (s *InsertContext) STRING() antlr.TerminalNode {
+	return s.GetToken(JXBParserSTRING, 0)
+}
+
 func (s *InsertContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -898,30 +905,69 @@ func (s *InsertContext) ExitRule(listener antlr.ParseTreeListener) {
 func (p *JXBParser) Insert() (localctx IInsertContext) {
 	localctx = NewInsertContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 8, JXBParserRULE_insert)
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(45)
-		p.Match(JXBParserINSERT)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
+	p.SetState(51)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
 	}
-	{
-		p.SetState(46)
-		p.Match(JXBParserKEYWORD)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext()) {
+	case 1:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(45)
+			p.Match(JXBParserINSERT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
-	}
-	{
-		p.SetState(47)
-		p.Match(JXBParserNL)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
+		{
+			p.SetState(46)
+			p.Match(JXBParserKEYWORD)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
+		{
+			p.SetState(47)
+			p.Match(JXBParserNL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case 2:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(48)
+			p.Match(JXBParserINSERT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(49)
+			p.Match(JXBParserSTRING)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(50)
+			p.Match(JXBParserNL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
 errorExit:

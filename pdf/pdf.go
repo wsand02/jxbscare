@@ -11,10 +11,16 @@ import (
 	"github.com/wsand02/jxbscare/parser"
 )
 
+// träd?
 type Aboowlock struct {
-	Data  string
-	Child *Aboowlock
+	Data     string
+	Children *[]Aboowlock
+	OGCtx    *antlr.BaseParserRuleContext
 }
+
+// då måste jag kunna söka det...
+
+// this will be slow but whatever
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
@@ -31,11 +37,23 @@ func NewTreeShapeListener() *TreeShapeListener {
 	return tsl
 }
 
+func findEnclosingBlock(ctx antlr.ParserRuleContext) string {
+	for p := ctx.GetParent(); p != nil; p = p.GetParent() {
+		switch p.(type) {
+		case *parser.BlockContext:
+			return "block"
+		}
+	}
+	return "global"
+}
+
 func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 	fmt.Println("IN ENTER ASSIGNMENT")
 	ass := ctx.KEYWORD().GetText()
 	ctx.GetInvokingState()
 	fmt.Println(ass)
+	idk := findEnclosingBlock(ctx)
+	fmt.Println(idk)
 	sb := strings.Builder{}
 	for idx, val := range ctx.AllSTRING() {
 		fmt.Printf(" %s ", val)
@@ -55,6 +73,9 @@ func (tsl *TreeShapeListener) EnterBlock(ctx *parser.BlockContext) {
 	if len(ctx.AllStatement()) <= 0 {
 		return
 	}
+	abowlock := Aboowlock{OGCtx: ctx}
+	Aboowlock.OGCtx
+	tsl.Blocks = append(tsl.Blocks, new(Aboowlock))
 	for _, val := range ctx.AllStatement() {
 		fmt.Println(val.GetText())
 		if val.Block() != nil {
