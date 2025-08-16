@@ -46,9 +46,8 @@ func NewTreeShapeListener() *TreeShapeListener {
 
 func findEnclosingBlock(ctx antlr.ParserRuleContext) string {
 	for p := ctx.GetParent(); p != nil; p = p.GetParent() {
-		switch p.(type) {
-		case *parser.BlockContext:
-			return "block"
+		if blockCtx, ok := p.(*parser.BlockContext); ok {
+			return blockCtx.STRING(0).GetText() // Return the name of the block
 		}
 	}
 	return "global"
@@ -83,7 +82,11 @@ func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 		tsl.CVData[ass] = ab
 		return
 	}
-	parentBlock := tsl.CVData[parent]
+	parentBlock, exists := tsl.CVData[parent]
+	if !exists {
+		fmt.Printf("Parent block '%s' not found\n", parent)
+		return
+	}
 	if parentBlock.Children == nil {
 		parentBlock.Children = make(map[string]Aboowlock)
 	}
@@ -96,9 +99,8 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	if ctx.STRING() != nil {
 		tsl.AddStuff(tsl.CVData[ctx.STRING().GetText()].Children)
 	} else if ctx.KEYWORD() != nil {
-		tsl.AddStuff(tsl.CVData[ctx.KEYWORD().GetText()].Children)
+		tsl.AddStuff(tsl.CVData)
 	}
-
 }
 
 // func (tsl *TreeShapeListener) EnterEveryRule(ctx antlr.ParserRuleContext) {
