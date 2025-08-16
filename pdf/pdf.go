@@ -96,10 +96,12 @@ func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 
 func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	fmt.Println(ctx.GetText())
-	if ctx.STRING() != nil {
-		tsl.AddStuff(tsl.CVData[ctx.STRING().GetText()].Children)
-	} else if ctx.KEYWORD() != nil {
-		tsl.AddStuff(tsl.CVData[ctx.KEYWORD().GetText()].Children)
+	if ctx.KEYWORD() != nil {
+		tsl.PPdf.AddAutoRow(text.NewCol(10, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+	} else {
+		if ctx.STRING() != nil {
+			tsl.AddStuffRec(tsl.CVData[ctx.STRING().GetText()].Children)
+		}
 	}
 }
 
@@ -109,11 +111,11 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 // 		text.NewCol(10, ctx.GetText()))
 // }
 
-func (tsl *TreeShapeListener) AddStuff(CVData map[string]Aboowlock) {
+func (tsl *TreeShapeListener) AddStuffRec(CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
 		tsl.PPdf.AddAutoRow(text.NewCol(10, idk.Data))
 		fmt.Println(idk.MarotoNodeType)
-		tsl.AddStuff(idk.Children)
+		tsl.AddStuffRec(idk.Children)
 	}
 }
 
