@@ -99,7 +99,7 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	if ctx.STRING() != nil {
 		tsl.AddStuff(tsl.CVData[ctx.STRING().GetText()].Children)
 	} else if ctx.KEYWORD() != nil {
-		tsl.AddStuff(tsl.CVData)
+		tsl.AddStuff(tsl.CVData[ctx.KEYWORD().GetText()].Children)
 	}
 }
 
