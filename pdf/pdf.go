@@ -7,22 +7,25 @@ import (
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/johnfercher/maroto/v2"
+	"github.com/johnfercher/maroto/v2/pkg/components/text"
 	"github.com/johnfercher/maroto/v2/pkg/core"
 	"github.com/wsand02/jxbscare/parser"
 )
 
 // träd?
 type Aboowlock struct {
-	Data     string
-	Children *[]Aboowlock
-	OGCtx    *antlr.ParserRuleContext
+	MarotoNodeType string
+	Data           string
+	Children       map[string]Aboowlock
+	// OGCtx          *antlr.ParserRuleContext
 }
 
-func kukFunktion(ctx antlr.ParserRuleContext) Aboowlock {
-	abowlock := Aboowlock{}
-	abowlock.OGCtx = &ctx
-	return abowlock
-}
+// func kukFunktion(ctx antlr.ParserRuleContext) Aboowlock {
+// 	abowlock := Aboowlock{}
+// 	abowlock.OGCtx = &ctx
+// 	abowlock.Children = &[]Aboowlock{}
+// 	return abowlock
+// }
 
 // då måste jag kunna söka det...
 
@@ -30,15 +33,13 @@ func kukFunktion(ctx antlr.ParserRuleContext) Aboowlock {
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
-	CVData map[string]string
-	Blocks []Aboowlock
+	CVData map[string]Aboowlock
 	PPdf   core.Maroto
 }
 
 func NewTreeShapeListener() *TreeShapeListener {
 	tsl := new(TreeShapeListener)
-	tsl.CVData = make(map[string]string)
-	tsl.Blocks = []Aboowlock{}
+	tsl.CVData = make(map[string]Aboowlock)
 	tsl.PPdf = maroto.New()
 	return tsl
 }
@@ -53,13 +54,21 @@ func findEnclosingBlock(ctx antlr.ParserRuleContext) string {
 	return "global"
 }
 
+func (tsl *TreeShapeListener) EnterBlock(ctx *parser.BlockContext) {
+	ass := ctx.STRING(0).GetText()
+	ab := Aboowlock{
+		MarotoNodeType: "block",
+	}
+	// i framtiden ska då alltså dess arguments vara i data?
+	tsl.CVData[ass] = ab
+}
+
 func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
-	fmt.Println("IN ENTER ASSIGNMENT")
 	ass := ctx.KEYWORD().GetText()
-	ctx.GetInvokingState()
 	fmt.Println(ass)
-	idk := findEnclosingBlock(ctx)
-	fmt.Println(idk)
+	ab := Aboowlock{
+		MarotoNodeType: ass,
+	}
 	sb := strings.Builder{}
 	for idx, val := range ctx.AllSTRING() {
 		fmt.Printf(" %s ", val)
@@ -68,24 +77,41 @@ func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 			sb.WriteString(" ")
 		}
 	}
-	tsl.CVData[ass] = sb.String()
-	fmt.Println()
-	fmt.Println(tsl.CVData[ass])
-}
-
-func (tsl *TreeShapeListener) EnterBlock(ctx *parser.BlockContext) {
-	fmt.Printf("IN BLOCK %s\n", ctx.STRING(0).GetText())
-	fmt.Println("BLOCK CONTENTS: ")
-	if len(ctx.AllStatement()) <= 0 {
+	ab.Data = sb.String()
+	parent := findEnclosingBlock(ctx)
+	if parent == "global" {
+		tsl.CVData[ass] = ab
 		return
 	}
-	abaf := kukFunktion(ctx)
-	tsl.Blocks = append(tsl.Blocks, abaf)
-	for _, val := range ctx.AllStatement() {
-		fmt.Println(val.GetText())
-		if val.Block() != nil {
-			fmt.Println("BLOCK IN BLOCK WOAH")
-		}
+	parentBlock := tsl.CVData[parent]
+	if parentBlock.Children == nil {
+		parentBlock.Children = make(map[string]Aboowlock)
+	}
+	parentBlock.Children[ass] = ab
+	tsl.CVData[parent] = parentBlock
+}
+
+func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
+	fmt.Println(ctx.GetText())
+	if ctx.STRING() != nil {
+		tsl.AddStuff(tsl.CVData[ctx.STRING().GetText()].Children)
+	} else if ctx.KEYWORD() != nil {
+		tsl.AddStuff(tsl.CVData[ctx.KEYWORD().GetText()].Children)
+	}
+
+}
+
+// func (tsl *TreeShapeListener) EnterEveryRule(ctx antlr.ParserRuleContext) {
+
+// 	tsl.PPdf.AddRow(10,
+// 		text.NewCol(10, ctx.GetText()))
+// }
+
+func (tsl *TreeShapeListener) AddStuff(CVData map[string]Aboowlock) {
+	for _, idk := range CVData {
+		tsl.PPdf.AddAutoRow(text.NewCol(10, idk.Data))
+		fmt.Println(idk.MarotoNodeType)
+		tsl.AddStuff(idk.Children)
 	}
 }
 
@@ -98,5 +124,14 @@ func Laboutonmaxxadlatte() {
 	p := parser.NewJXBParser(stream)
 	p.AddErrorListener(antlr.NewDiagnosticErrorListener(true))
 	tree := p.Document()
-	antlr.ParseTreeWalkerDefault.Walk(NewTreeShapeListener(), tree)
+	listener := NewTreeShapeListener()
+	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
+	document, err := listener.PPdf.Generate()
+	if err != nil {
+		fmt.Printf("Error generating PDF: %s\n", err)
+	}
+	err = document.Save("output.pdf")
+	if err != nil {
+		fmt.Println("whoops")
+	}
 }
