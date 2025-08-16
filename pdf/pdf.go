@@ -15,7 +15,7 @@ import (
 type Aboowlock struct {
 	Data     string
 	Children *[]Aboowlock
-	OGCtx    *antlr.BaseParserRuleContext
+	OGCtx    *antlr.ParserRuleContext
 }
 
 // då måste jag kunna söka det...
