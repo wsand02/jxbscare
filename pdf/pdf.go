@@ -18,6 +18,12 @@ type Aboowlock struct {
 	OGCtx    *antlr.ParserRuleContext
 }
 
+func kukFunktion(ctx antlr.ParserRuleContext) Aboowlock {
+	abowlock := Aboowlock{}
+	abowlock.OGCtx = &ctx
+	return abowlock
+}
+
 // då måste jag kunna söka det...
 
 // this will be slow but whatever
@@ -73,9 +79,8 @@ func (tsl *TreeShapeListener) EnterBlock(ctx *parser.BlockContext) {
 	if len(ctx.AllStatement()) <= 0 {
 		return
 	}
-	abowlock := Aboowlock{OGCtx: ctx}
-	Aboowlock.OGCtx
-	tsl.Blocks = append(tsl.Blocks, new(Aboowlock))
+	abaf := kukFunktion(ctx)
+	tsl.Blocks = append(tsl.Blocks, abaf)
 	for _, val := range ctx.AllStatement() {
 		fmt.Println(val.GetText())
 		if val.Block() != nil {
