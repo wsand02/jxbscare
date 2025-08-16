@@ -30,7 +30,6 @@ INSERT
   ;
 KEYWORD
   : 'cv'
-  | 'papersize'
   | 'name'
   | 'selfie'
   | 'address'

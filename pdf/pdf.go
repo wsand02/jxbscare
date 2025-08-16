@@ -2,13 +2,15 @@ package pdf
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/johnfercher/maroto/v2"
 	"github.com/johnfercher/maroto/v2/pkg/components/text"
+	"github.com/johnfercher/maroto/v2/pkg/config"
+	"github.com/johnfercher/maroto/v2/pkg/consts/pagesize"
 	"github.com/johnfercher/maroto/v2/pkg/core"
+	"github.com/johnfercher/maroto/v2/pkg/core/entity"
 	"github.com/wsand02/jxbscare/parser"
 )
 
@@ -37,10 +39,10 @@ type TreeShapeListener struct {
 	PPdf   core.Maroto
 }
 
-func NewTreeShapeListener() *TreeShapeListener {
+func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
 	tsl := new(TreeShapeListener)
 	tsl.CVData = make(map[string]Aboowlock)
-	tsl.PPdf = maroto.New()
+	tsl.PPdf = maroto.New(cfg)
 	return tsl
 }
 
@@ -119,16 +121,21 @@ func (tsl *TreeShapeListener) AddStuffRec(CVData map[string]Aboowlock) {
 	}
 }
 
-func Laboutonmaxxadlatte() {
+func Laboutonmaxxadlatte(filename string, paperSize string) {
 	// fmt.Printf("%s", os.Args[1])
-	input, _ := antlr.NewFileStream(os.Args[1])
+	input, _ := antlr.NewFileStream(filename)
 
 	lexer := parser.NewJXBLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
 	p := parser.NewJXBParser(stream)
 	p.AddErrorListener(antlr.NewDiagnosticErrorListener(true))
 	tree := p.Document()
-	listener := NewTreeShapeListener()
+
+	paper := pagesize.Type(strings.ToLower(paperSize))
+	fmt.Println(paperSize)
+
+	cfg := config.NewBuilder().WithPageSize(paper).Build()
+	listener := NewTreeShapeListener(cfg)
 	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
 	document, err := listener.PPdf.Generate()
 	if err != nil {
