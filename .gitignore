@@ -7,6 +7,7 @@
 *.dll
 *.so
 *.dylib
+jxbscare
 
 # Test binary, built with `go test -c`
 *.test

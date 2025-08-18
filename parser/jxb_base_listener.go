@@ -50,3 +50,9 @@ func (s *BaseJXBListener) EnterInsert(ctx *InsertContext) {}
 
 // ExitInsert is called when production insert is exited.
 func (s *BaseJXBListener) ExitInsert(ctx *InsertContext) {}
+
+// EnterMaroto is called when production maroto is entered.
+func (s *BaseJXBListener) EnterMaroto(ctx *MarotoContext) {}
+
+// ExitMaroto is called when production maroto is exited.
+func (s *BaseJXBListener) ExitMaroto(ctx *MarotoContext) {}

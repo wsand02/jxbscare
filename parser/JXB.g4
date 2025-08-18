@@ -7,6 +7,7 @@ statement
   : assignment
   | block
   | insert
+  | maroto
   ;
 assignment
   : KEYWORD STRING* NL
@@ -18,7 +19,9 @@ insert
   : INSERT KEYWORD NL
   | INSERT STRING NL
   ;
-
+maroto
+  : ROW insert* NL
+  ;
 BEGIN
   : 'begin'
   ;
@@ -37,6 +40,9 @@ KEYWORD
   | 'email'
   | 'website'
   | 'title'
+  ;
+ROW
+  : 'row'
   ;
 
 fragment ALPHA

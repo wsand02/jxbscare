@@ -23,6 +23,9 @@ type JXBListener interface {
 	// EnterInsert is called when entering the insert production.
 	EnterInsert(c *InsertContext)
 
+	// EnterMaroto is called when entering the maroto production.
+	EnterMaroto(c *MarotoContext)
+
 	// ExitDocument is called when exiting the document production.
 	ExitDocument(c *DocumentContext)
 
@@ -37,4 +40,7 @@ type JXBListener interface {
 
 	// ExitInsert is called when exiting the insert production.
 	ExitInsert(c *InsertContext)
+
+	// ExitMaroto is called when exiting the maroto production.
+	ExitMaroto(c *MarotoContext)
 }

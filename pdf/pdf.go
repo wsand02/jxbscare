@@ -35,8 +35,11 @@ type Aboowlock struct {
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
-	CVData map[string]Aboowlock
-	PPdf   core.Maroto
+	CVData    map[string]Aboowlock
+	PPdf      core.Maroto
+	LastRow   core.Row
+	LastCol   core.Col
+	ColsToAdd []core.Col
 }
 
 func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
@@ -50,6 +53,9 @@ func findEnclosingBlock(ctx antlr.ParserRuleContext) string {
 	for p := ctx.GetParent(); p != nil; p = p.GetParent() {
 		if blockCtx, ok := p.(*parser.BlockContext); ok {
 			return blockCtx.STRING(0).GetText() // Return the name of the block
+		}
+		if _, ok := p.(*parser.MarotoContext); ok {
+			return "row"
 		}
 	}
 	return "global"
@@ -98,13 +104,36 @@ func (tsl *TreeShapeListener) EnterAssignment(ctx *parser.AssignmentContext) {
 
 func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	fmt.Println(ctx.GetText())
-	if ctx.KEYWORD() != nil {
-		tsl.PPdf.AddAutoRow(text.NewCol(10, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+	parent := findEnclosingBlock(ctx)
+	if parent == "row" {
+		tsl.InsertIntoRow(ctx)
 	} else {
-		if ctx.STRING() != nil {
-			tsl.AddStuffRec(tsl.CVData[ctx.STRING().GetText()].Children)
-		}
+		tsl.InsertDirectly(ctx)
 	}
+}
+
+func (tsl *TreeShapeListener) InsertDirectly(ctx *parser.InsertContext) {
+	if ctx.KEYWORD() != nil {
+		tsl.PPdf.AddAutoRow(text.NewCol(12, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+	} else if ctx.STRING() != nil {
+		tsl.AddStuffRecDirect(tsl.CVData[ctx.STRING().GetText()].Children)
+	}
+}
+
+func (tsl *TreeShapeListener) InsertIntoRow(ctx *parser.InsertContext) {
+	if ctx.KEYWORD() != nil {
+		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(6, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+	} else if ctx.STRING() != nil {
+		tsl.AddStuffRecRow(tsl.CVData[ctx.STRING().GetText()].Children)
+	}
+}
+
+func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
+	tsl.ColsToAdd = []core.Col{}
+}
+
+func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
+	tsl.PPdf.AddRow(10, tsl.ColsToAdd...)
 }
 
 // func (tsl *TreeShapeListener) EnterEveryRule(ctx antlr.ParserRuleContext) {
@@ -113,11 +142,19 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 // 		text.NewCol(10, ctx.GetText()))
 // }
 
-func (tsl *TreeShapeListener) AddStuffRec(CVData map[string]Aboowlock) {
+func (tsl *TreeShapeListener) AddStuffRecRow(CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.PPdf.AddAutoRow(text.NewCol(10, idk.Data))
+		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(2, idk.Data))
 		fmt.Println(idk.MarotoNodeType)
-		tsl.AddStuffRec(idk.Children)
+		tsl.AddStuffRecRow(idk.Children)
+	}
+}
+
+func (tsl *TreeShapeListener) AddStuffRecDirect(CVData map[string]Aboowlock) {
+	for _, idk := range CVData {
+		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data))
+		fmt.Println(idk.MarotoNodeType)
+		tsl.AddStuffRecRow(idk.Children)
 	}
 }
 
