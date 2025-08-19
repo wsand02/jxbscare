@@ -29,7 +29,7 @@ func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
 
 func (tsl *TreeShapeListener) AddStuffRecRow(CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), idk.Data))
+		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), idk.Data, AlignmentToProp(tsl.ColAlign)))
 		fmt.Println(idk.MarotoNodeType)
 		tsl.AddStuffRecRow(idk.Children)
 	}
@@ -45,7 +45,7 @@ func (tsl *TreeShapeListener) AddStuffRecRowDry(CVData map[string]Aboowlock) {
 
 func (tsl *TreeShapeListener) AddStuffRecDirect(CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data))
+		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data, AlignmentToProp(tsl.ColAlign)))
 		fmt.Println(idk.MarotoNodeType)
 		tsl.AddStuffRecRow(idk.Children)
 	}

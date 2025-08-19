@@ -13,11 +13,10 @@ assignment
   : KEYWORD STRING* NL
   ;
 block
-  : BEGIN STRING NL statement* END STRING NL 
+  : BEGIN STRING NL assignment* END STRING NL 
   ;
 insert
-  : INSERT KEYWORD NL
-  | INSERT STRING NL
+  : INSERT (KEYWORD | STRING) ALIGNMENT? NL
   ;
 maroto
   : ROW insert* NL
@@ -40,6 +39,13 @@ KEYWORD
   | 'email'
   | 'website'
   | 'title'
+  ;
+ALIGNMENT
+  : 'left'
+  | 'right'
+  | 'center'
+  | 'bottom'
+  | 'top'
   ;
 ROW
   : 'row'

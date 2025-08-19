@@ -12,6 +12,24 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	fmt.Println(ctx.GetText())
 	parent := findEnclosingBlock(ctx)
 	fmt.Println(parent)
+	if ctx.ALIGNMENT() != nil {
+		a := ctx.ALIGNMENT().GetText()
+		fmt.Println(a)
+		switch a {
+		case "left":
+			tsl.ColAlign = Left
+		case "right":
+			tsl.ColAlign = Right
+		case "center":
+			tsl.ColAlign = Center
+		case "top":
+			tsl.ColAlign = Top
+		case "bottom":
+			tsl.ColAlign = Bottom
+		default:
+			tsl.ColAlign = Left
+		}
+	}
 	if parent == "row" {
 		tsl.InsertIntoRowDry(ctx)
 	}
@@ -30,7 +48,7 @@ func (tsl *TreeShapeListener) ExitInsert(ctx *parser.InsertContext) {
 
 func (tsl *TreeShapeListener) InsertDirectly(ctx *parser.InsertContext) {
 	if ctx.KEYWORD() != nil {
-		tsl.PPdf.AddAutoRow(text.NewCol(12, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+		tsl.PPdf.AddAutoRow(text.NewCol(12, tsl.CVData[ctx.KEYWORD().GetText()].Data, AlignmentToProp(tsl.ColAlign)))
 	} else if ctx.STRING() != nil {
 		tsl.AddStuffRecDirect(tsl.CVData[ctx.STRING().GetText()].Children)
 	}
@@ -50,7 +68,7 @@ func (tsl *TreeShapeListener) GetMyWidth() int {
 
 func (tsl *TreeShapeListener) InsertIntoRow(ctx *parser.InsertContext) {
 	if ctx.KEYWORD() != nil {
-		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), tsl.CVData[ctx.KEYWORD().GetText()].Data))
+		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), tsl.CVData[ctx.KEYWORD().GetText()].Data, AlignmentToProp(tsl.ColAlign)))
 	} else if ctx.STRING() != nil {
 		tsl.AddStuffRecRow(tsl.CVData[ctx.STRING().GetText()].Children)
 	}
