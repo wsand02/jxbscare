@@ -8,6 +8,17 @@ import (
 )
 
 func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
+	tsl.InsertCounter = 0
+	fmt.Println(ctx.GetText())
+	parent := findEnclosingBlock(ctx)
+	fmt.Println(parent)
+	if parent == "row" {
+		tsl.InsertIntoRowDry(ctx)
+	}
+}
+
+func (tsl *TreeShapeListener) ExitInsert(ctx *parser.InsertContext) {
+	fmt.Println(tsl.InsertCounter)
 	fmt.Println(ctx.GetText())
 	parent := findEnclosingBlock(ctx)
 	if parent == "row" {
@@ -25,13 +36,31 @@ func (tsl *TreeShapeListener) InsertDirectly(ctx *parser.InsertContext) {
 	}
 }
 
+func (tsl *TreeShapeListener) GetMyWidth() int {
+	width := 12
+	numCols := tsl.InsertCounter
+	if numCols > 0 {
+		width = 12 / numCols
+	}
+	fmt.Printf("Width: 12 / %d = %d \n", numCols, width)
+	return width
+}
+
 // todo count all children from parent aka count all children in row...
 
 func (tsl *TreeShapeListener) InsertIntoRow(ctx *parser.InsertContext) {
 	if ctx.KEYWORD() != nil {
-		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(12, tsl.CVData[ctx.KEYWORD().GetText()].Data))
+		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), tsl.CVData[ctx.KEYWORD().GetText()].Data))
 	} else if ctx.STRING() != nil {
 		tsl.AddStuffRecRow(tsl.CVData[ctx.STRING().GetText()].Children)
+	}
+}
+
+func (tsl *TreeShapeListener) InsertIntoRowDry(ctx *parser.InsertContext) {
+	if ctx.KEYWORD() != nil {
+		tsl.InsertCounter++
+	} else if ctx.STRING() != nil {
+		tsl.AddStuffRecRowDry(tsl.CVData[ctx.STRING().GetText()].Children)
 	}
 }
 

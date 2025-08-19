@@ -27,11 +27,12 @@ type Aboowlock struct {
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
-	CVData    map[string]Aboowlock
-	PPdf      core.Maroto
-	LastRow   core.Row
-	LastCol   core.Col
-	ColsToAdd []core.Col
+	CVData        map[string]Aboowlock
+	PPdf          core.Maroto
+	LastRow       core.Row
+	LastCol       core.Col
+	ColsToAdd     []core.Col
+	InsertCounter int
 }
 
 func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
