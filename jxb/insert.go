@@ -2,34 +2,32 @@ package jxb
 
 import (
 	"fmt"
-
-	"github.com/wsand02/jxbscare/parser"
 )
 
-func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
-	tsl.InsertCounter = 0
-	fmt.Println(ctx.GetText())
-	parent := findEnclosingBlock(ctx)
-	fmt.Println(parent)
-	if ctx.ALIGNMENT() != nil {
-		a := ctx.ALIGNMENT().GetText()
-		fmt.Println(a)
-		switch a {
-		case "left":
-			tsl.ColAlign = Left
-		case "right":
-			tsl.ColAlign = Right
-		case "center":
-			tsl.ColAlign = Center
-		case "top":
-			tsl.ColAlign = Top
-		case "bottom":
-			tsl.ColAlign = Bottom
-		default:
-			tsl.ColAlign = Left
-		}
-	}
-}
+// func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
+// 	// tsl.InsertCounter = 0
+// 	fmt.Println(ctx.GetText())
+// 	parent := findEnclosingBlock(ctx)
+// 	fmt.Println(parent)
+// 	if ctx.ALIGNMENT() != nil {
+// 		a := ctx.ALIGNMENT().GetText()
+// 		fmt.Println(a)
+// 		switch a {
+// 		case "left":
+// 			tsl.ColAlign = Left
+// 		case "right":
+// 			tsl.ColAlign = Right
+// 		case "center":
+// 			tsl.ColAlign = Center
+// 		case "top":
+// 			tsl.ColAlign = Top
+// 		case "bottom":
+// 			tsl.ColAlign = Bottom
+// 		default:
+// 			tsl.ColAlign = Left
+// 		}
+// 	}
+// }
 
 // func (tsl *TreeShapeListener) ExitInsert(ctx *parser.InsertContext) {
 // 	fmt.Println(tsl.InsertCounter)

@@ -22,7 +22,7 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 		ins := xcol.Insert()
 		if ins.KEYWORD() != nil {
 			tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(tsl.CVData[ins.KEYWORD().GetText()].Data, props.Text{
-				Align: AlignmentToProp(tsl.ColAlign),
+				Align: AlignmentToProp(AlignmentToAlignment(ins.(*parser.InsertContext))),
 				Top:   tsl.InsertCounter,
 			}))
 		} else if ins.STRING() != nil {
