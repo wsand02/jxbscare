@@ -10,19 +10,20 @@ import (
 )
 
 func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
+	fmt.Println("ENTER MAROTO")
 	tsl.ColsToAdd = []core.Col{}
 	colAmount := len(ctx.AllMarcol())
+	fmt.Printf("\nCols in Maroto: %d\n", colAmount)
 	width := CalcWidth(colAmount)
 	for _, xcol := range ctx.AllMarcol() {
 		tsl.ComponentsToAdd = []core.Component{}
-		for _, ins := range xcol.AllInsert() {
-			if ins.KEYWORD() != nil {
-				tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(tsl.CVData[ins.KEYWORD().GetText()].Data, AlignmentToProp(tsl.ColAlign)))
-			} else if ins.STRING() != nil {
-				tsl.MarotoInsertRec(tsl.CVData[ins.STRING().GetText()].Children)
-			}
-
+		ins := xcol.Insert()
+		if ins.KEYWORD() != nil {
+			tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(tsl.CVData[ins.KEYWORD().GetText()].Data, AlignmentToProp(tsl.ColAlign)))
+		} else if ins.STRING() != nil {
+			tsl.MarotoInsertRec(tsl.CVData[ins.STRING().GetText()].Children)
 		}
+
 		tsl.ColsToAdd = append(tsl.ColsToAdd, col.New(width).Add(tsl.ComponentsToAdd...))
 	}
 	tsl.PPdf.AddAutoRow(tsl.ColsToAdd...)
@@ -33,12 +34,12 @@ func (tsl *TreeShapeListener) MarotoInsertRec(CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
 		tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(idk.Data, AlignmentToProp(tsl.ColAlign)))
 		fmt.Println(idk.MarotoNodeType)
-		tsl.AddStuffRecRow(idk.Children)
+		tsl.MarotoInsertRec(idk.Children)
 	}
 }
 
 func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
-	tsl.PPdf.AddRow(10, tsl.ColsToAdd...)
+	fmt.Println("EXIT MAROTO")
 	tsl.InsertCounter = 0
 	tsl.ColsToAdd = []core.Col{}
 	tsl.ComponentsToAdd = []core.Component{}

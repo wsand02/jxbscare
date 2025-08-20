@@ -19,10 +19,10 @@ insert
   : INSERT (KEYWORD | STRING) ALIGNMENT? NL
   ;
 maroto
-  : ROW marcol* NL
+  : ROW '{' marcol* '}' NL
   ;
 marcol
-  : COL insert*
+  : COL insert
   ;
 BEGIN
   : 'begin'
