@@ -19,7 +19,7 @@ insert
   : INSERT (KEYWORD | STRING) ALIGNMENT? NL
   ;
 maroto
-  : ROW insert* NL
+  : ROW NL (COL INSERT*)* NL
   ;
 BEGIN
   : 'begin'
@@ -50,7 +50,9 @@ ALIGNMENT
 ROW
   : 'row'
   ;
-
+COL
+  : 'col'
+  ;
 fragment ALPHA
   : [A-Za-z]
   ;
