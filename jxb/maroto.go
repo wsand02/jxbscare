@@ -26,7 +26,7 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 				Top:   tsl.InsertCounter,
 			}))
 		} else if ins.STRING() != nil {
-			tsl.MarotoInsertRec(tsl.CVData[ins.STRING().GetText()].Children)
+			tsl.MarotoInsertRec(ins.(*parser.InsertContext), tsl.CVData[ins.STRING().GetText()].Children)
 		}
 
 		tsl.ColsToAdd = append(tsl.ColsToAdd, col.New(width).Add(tsl.ComponentsToAdd...))
@@ -35,14 +35,14 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 }
 
 // differs from surface level AddStufRecRow
-func (tsl *TreeShapeListener) MarotoInsertRec(CVData map[string]Aboowlock) {
+func (tsl *TreeShapeListener) MarotoInsertRec(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
 		tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(idk.Data, props.Text{
-			Align: AlignmentToProp(tsl.ColAlign),
+			Align: AlignmentToProp(AlignmentToAlignment(ctx)),
 			Top:   tsl.InsertCounter,
 		}))
 		fmt.Println(idk.MarotoNodeType)
-		tsl.MarotoInsertRec(idk.Children)
+		tsl.MarotoInsertRec(ctx, idk.Children)
 		tsl.InsertCounter += 4
 	}
 }
