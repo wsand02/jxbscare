@@ -33,11 +33,12 @@ var JXBParserStaticData struct {
 func jxbParserInit() {
 	staticData := &JXBParserStaticData
 	staticData.LiteralNames = []string{
-		"", "'{'", "'}'", "'begin'", "'end'", "'insert'", "", "", "'row'", "'col'",
+		"", "'.'", "'begin'", "'end'", "'insert'", "", "", "'row'", "'col'",
+		"'hr'",
 	}
 	staticData.SymbolicNames = []string{
-		"", "", "", "BEGIN", "END", "INSERT", "KEYWORD", "ALIGNMENT", "ROW",
-		"COL", "STRING", "WS", "NL",
+		"", "", "BEGIN", "END", "INSERT", "KEYWORD", "ALIGNMENT", "ROW", "COL",
+		"HR", "STRING", "WS", "NL",
 	}
 	staticData.RuleNames = []string{
 		"document", "statement", "assignment", "block", "insert", "maroto",
@@ -45,34 +46,34 @@ func jxbParserInit() {
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 12, 72, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 12, 71, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 1, 0, 5, 0, 16, 8, 0, 10, 0, 12, 0, 19, 9, 0,
 		1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 27, 8, 1, 1, 2, 1, 2, 5, 2, 31,
 		8, 2, 10, 2, 12, 2, 34, 9, 2, 1, 2, 1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3,
 		42, 8, 3, 10, 3, 12, 3, 45, 9, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1,
-		4, 3, 4, 54, 8, 4, 1, 4, 1, 4, 1, 5, 1, 5, 1, 5, 5, 5, 61, 8, 5, 10, 5,
-		12, 5, 64, 9, 5, 1, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 6, 1, 6, 0, 0, 7, 0,
-		2, 4, 6, 8, 10, 12, 0, 1, 2, 0, 6, 6, 10, 10, 72, 0, 17, 1, 0, 0, 0, 2,
-		26, 1, 0, 0, 0, 4, 28, 1, 0, 0, 0, 6, 37, 1, 0, 0, 0, 8, 50, 1, 0, 0, 0,
-		10, 57, 1, 0, 0, 0, 12, 68, 1, 0, 0, 0, 14, 16, 3, 2, 1, 0, 15, 14, 1,
-		0, 0, 0, 16, 19, 1, 0, 0, 0, 17, 15, 1, 0, 0, 0, 17, 18, 1, 0, 0, 0, 18,
-		20, 1, 0, 0, 0, 19, 17, 1, 0, 0, 0, 20, 21, 5, 0, 0, 1, 21, 1, 1, 0, 0,
-		0, 22, 27, 3, 4, 2, 0, 23, 27, 3, 6, 3, 0, 24, 27, 3, 8, 4, 0, 25, 27,
-		3, 10, 5, 0, 26, 22, 1, 0, 0, 0, 26, 23, 1, 0, 0, 0, 26, 24, 1, 0, 0, 0,
-		26, 25, 1, 0, 0, 0, 27, 3, 1, 0, 0, 0, 28, 32, 5, 6, 0, 0, 29, 31, 5, 10,
-		0, 0, 30, 29, 1, 0, 0, 0, 31, 34, 1, 0, 0, 0, 32, 30, 1, 0, 0, 0, 32, 33,
-		1, 0, 0, 0, 33, 35, 1, 0, 0, 0, 34, 32, 1, 0, 0, 0, 35, 36, 5, 12, 0, 0,
-		36, 5, 1, 0, 0, 0, 37, 38, 5, 3, 0, 0, 38, 39, 5, 10, 0, 0, 39, 43, 5,
-		12, 0, 0, 40, 42, 3, 4, 2, 0, 41, 40, 1, 0, 0, 0, 42, 45, 1, 0, 0, 0, 43,
-		41, 1, 0, 0, 0, 43, 44, 1, 0, 0, 0, 44, 46, 1, 0, 0, 0, 45, 43, 1, 0, 0,
-		0, 46, 47, 5, 4, 0, 0, 47, 48, 5, 10, 0, 0, 48, 49, 5, 12, 0, 0, 49, 7,
-		1, 0, 0, 0, 50, 51, 5, 5, 0, 0, 51, 53, 7, 0, 0, 0, 52, 54, 5, 7, 0, 0,
-		53, 52, 1, 0, 0, 0, 53, 54, 1, 0, 0, 0, 54, 55, 1, 0, 0, 0, 55, 56, 5,
-		12, 0, 0, 56, 9, 1, 0, 0, 0, 57, 58, 5, 8, 0, 0, 58, 62, 5, 1, 0, 0, 59,
-		61, 3, 12, 6, 0, 60, 59, 1, 0, 0, 0, 61, 64, 1, 0, 0, 0, 62, 60, 1, 0,
-		0, 0, 62, 63, 1, 0, 0, 0, 63, 65, 1, 0, 0, 0, 64, 62, 1, 0, 0, 0, 65, 66,
-		5, 2, 0, 0, 66, 67, 5, 12, 0, 0, 67, 11, 1, 0, 0, 0, 68, 69, 5, 9, 0, 0,
-		69, 70, 3, 8, 4, 0, 70, 13, 1, 0, 0, 0, 6, 17, 26, 32, 43, 53, 62,
+		4, 3, 4, 54, 8, 4, 1, 4, 1, 4, 1, 5, 1, 5, 5, 5, 60, 8, 5, 10, 5, 12, 5,
+		63, 9, 5, 1, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 6, 1, 6, 0, 0, 7, 0, 2, 4, 6,
+		8, 10, 12, 0, 1, 2, 0, 5, 5, 9, 10, 71, 0, 17, 1, 0, 0, 0, 2, 26, 1, 0,
+		0, 0, 4, 28, 1, 0, 0, 0, 6, 37, 1, 0, 0, 0, 8, 50, 1, 0, 0, 0, 10, 57,
+		1, 0, 0, 0, 12, 67, 1, 0, 0, 0, 14, 16, 3, 2, 1, 0, 15, 14, 1, 0, 0, 0,
+		16, 19, 1, 0, 0, 0, 17, 15, 1, 0, 0, 0, 17, 18, 1, 0, 0, 0, 18, 20, 1,
+		0, 0, 0, 19, 17, 1, 0, 0, 0, 20, 21, 5, 0, 0, 1, 21, 1, 1, 0, 0, 0, 22,
+		27, 3, 4, 2, 0, 23, 27, 3, 6, 3, 0, 24, 27, 3, 8, 4, 0, 25, 27, 3, 10,
+		5, 0, 26, 22, 1, 0, 0, 0, 26, 23, 1, 0, 0, 0, 26, 24, 1, 0, 0, 0, 26, 25,
+		1, 0, 0, 0, 27, 3, 1, 0, 0, 0, 28, 32, 5, 5, 0, 0, 29, 31, 5, 10, 0, 0,
+		30, 29, 1, 0, 0, 0, 31, 34, 1, 0, 0, 0, 32, 30, 1, 0, 0, 0, 32, 33, 1,
+		0, 0, 0, 33, 35, 1, 0, 0, 0, 34, 32, 1, 0, 0, 0, 35, 36, 5, 12, 0, 0, 36,
+		5, 1, 0, 0, 0, 37, 38, 5, 2, 0, 0, 38, 39, 5, 10, 0, 0, 39, 43, 5, 12,
+		0, 0, 40, 42, 3, 4, 2, 0, 41, 40, 1, 0, 0, 0, 42, 45, 1, 0, 0, 0, 43, 41,
+		1, 0, 0, 0, 43, 44, 1, 0, 0, 0, 44, 46, 1, 0, 0, 0, 45, 43, 1, 0, 0, 0,
+		46, 47, 5, 3, 0, 0, 47, 48, 5, 10, 0, 0, 48, 49, 5, 12, 0, 0, 49, 7, 1,
+		0, 0, 0, 50, 51, 5, 4, 0, 0, 51, 53, 7, 0, 0, 0, 52, 54, 5, 6, 0, 0, 53,
+		52, 1, 0, 0, 0, 53, 54, 1, 0, 0, 0, 54, 55, 1, 0, 0, 0, 55, 56, 5, 12,
+		0, 0, 56, 9, 1, 0, 0, 0, 57, 61, 5, 7, 0, 0, 58, 60, 3, 12, 6, 0, 59, 58,
+		1, 0, 0, 0, 60, 63, 1, 0, 0, 0, 61, 59, 1, 0, 0, 0, 61, 62, 1, 0, 0, 0,
+		62, 64, 1, 0, 0, 0, 63, 61, 1, 0, 0, 0, 64, 65, 5, 1, 0, 0, 65, 66, 5,
+		12, 0, 0, 66, 11, 1, 0, 0, 0, 67, 68, 5, 8, 0, 0, 68, 69, 3, 8, 4, 0, 69,
+		13, 1, 0, 0, 0, 6, 17, 26, 32, 43, 53, 61,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -112,14 +113,14 @@ func NewJXBParser(input antlr.TokenStream) *JXBParser {
 const (
 	JXBParserEOF       = antlr.TokenEOF
 	JXBParserT__0      = 1
-	JXBParserT__1      = 2
-	JXBParserBEGIN     = 3
-	JXBParserEND       = 4
-	JXBParserINSERT    = 5
-	JXBParserKEYWORD   = 6
-	JXBParserALIGNMENT = 7
-	JXBParserROW       = 8
-	JXBParserCOL       = 9
+	JXBParserBEGIN     = 2
+	JXBParserEND       = 3
+	JXBParserINSERT    = 4
+	JXBParserKEYWORD   = 5
+	JXBParserALIGNMENT = 6
+	JXBParserROW       = 7
+	JXBParserCOL       = 8
+	JXBParserHR        = 9
 	JXBParserSTRING    = 10
 	JXBParserWS        = 11
 	JXBParserNL        = 12
@@ -262,7 +263,7 @@ func (p *JXBParser) Document() (localctx IDocumentContext) {
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&360) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&180) != 0 {
 		{
 			p.SetState(14)
 			p.Statement()
@@ -868,6 +869,7 @@ type IInsertContext interface {
 	INSERT() antlr.TerminalNode
 	NL() antlr.TerminalNode
 	KEYWORD() antlr.TerminalNode
+	HR() antlr.TerminalNode
 	STRING() antlr.TerminalNode
 	ALIGNMENT() antlr.TerminalNode
 
@@ -919,6 +921,10 @@ func (s *InsertContext) KEYWORD() antlr.TerminalNode {
 	return s.GetToken(JXBParserKEYWORD, 0)
 }
 
+func (s *InsertContext) HR() antlr.TerminalNode {
+	return s.GetToken(JXBParserHR, 0)
+}
+
 func (s *InsertContext) STRING() antlr.TerminalNode {
 	return s.GetToken(JXBParserSTRING, 0)
 }
@@ -965,7 +971,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 		p.SetState(51)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(_la == JXBParserKEYWORD || _la == JXBParserSTRING) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1568) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -1144,15 +1150,7 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 			goto errorExit
 		}
 	}
-	{
-		p.SetState(58)
-		p.Match(JXBParserT__0)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(62)
+	p.SetState(61)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1161,11 +1159,11 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 
 	for _la == JXBParserCOL {
 		{
-			p.SetState(59)
+			p.SetState(58)
 			p.Marcol()
 		}
 
-		p.SetState(64)
+		p.SetState(63)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1173,15 +1171,15 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(65)
-		p.Match(JXBParserT__1)
+		p.SetState(64)
+		p.Match(JXBParserT__0)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(66)
+		p.SetState(65)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1294,7 +1292,7 @@ func (p *JXBParser) Marcol() (localctx IMarcolContext) {
 	p.EnterRule(localctx, 12, JXBParserRULE_marcol)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(68)
+		p.SetState(67)
 		p.Match(JXBParserCOL)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1302,7 +1300,7 @@ func (p *JXBParser) Marcol() (localctx IMarcolContext) {
 		}
 	}
 	{
-		p.SetState(69)
+		p.SetState(68)
 		p.Insert()
 	}
 

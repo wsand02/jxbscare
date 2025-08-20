@@ -17,6 +17,10 @@ const (
 	Bottom
 )
 
+func CtxToAlign(ctx *parser.InsertContext) align.Type {
+	return AlignmentToProp(AlignmentToAlignment(ctx))
+}
+
 // fight me
 func AlignmentToAlignment(ctx *parser.InsertContext) Alignment {
 	if ctx.ALIGNMENT() != nil {

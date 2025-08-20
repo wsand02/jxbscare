@@ -34,13 +34,15 @@ type TreeShapeListener struct {
 	ColsToAdd       []core.Col
 	ComponentsToAdd []core.Component
 	InsertCounter   float64
+	LineSpacing     float64
 }
 
-func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
+func NewTreeShapeListener(cfg *entity.Config, lineSpacing float64) *TreeShapeListener {
 	tsl := new(TreeShapeListener)
 	tsl.CVData = make(map[string]Aboowlock)
 	tsl.PPdf = maroto.New(cfg)
 	tsl.ColAlign = Left
 	tsl.InsertCounter = 0.0
+	tsl.LineSpacing = lineSpacing
 	return tsl
 }

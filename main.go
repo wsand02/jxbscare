@@ -9,13 +9,16 @@ import (
 )
 
 const (
-	paperSizeDesc    string = "The size of the paper the pdf will be rendered with."
-	defaultPaperSize string = "a4"
+	paperSizeDesc      string  = "The size of the paper the pdf will be rendered with."
+	defaultPaperSize   string  = "a4"
+	lineSpacingDesc    string  = "Space between lines for insert statement rendering."
+	defaultLineSpacing float64 = 4.0
 )
 
 func main() {
 	paperSize := flag.String("paperSize", defaultPaperSize, paperSizeDesc)
 	flag.StringVar(paperSize, "p", defaultPaperSize, paperSizeDesc)
+	lineSpacing := flag.Float64("lineSpacing", defaultLineSpacing, lineSpacingDesc)
 	flag.Parse()
 
 	inputJxb := flag.Arg(0)
@@ -23,5 +26,5 @@ func main() {
 		log.Fatal("No input provided")
 	}
 	fmt.Println(*paperSize)
-	pdf.Laboutonmaxxadlatte(inputJxb, *paperSize)
+	pdf.Laboutonmaxxadlatte(inputJxb, *paperSize, *lineSpacing)
 }

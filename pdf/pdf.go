@@ -12,8 +12,9 @@ import (
 )
 
 // träd?
+// äta träd https://dota2.fandom.com/wiki/Tango
 
-func Laboutonmaxxadlatte(filename string, paperSize string) {
+func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64) {
 	// fmt.Printf("%s", os.Args[1])
 	input, _ := antlr.NewFileStream(filename)
 
@@ -27,7 +28,7 @@ func Laboutonmaxxadlatte(filename string, paperSize string) {
 	fmt.Println(paperSize)
 
 	cfg := config.NewBuilder().WithPageSize(paper).Build()
-	listener := jxb.NewTreeShapeListener(cfg)
+	listener := jxb.NewTreeShapeListener(cfg, lineSpacing)
 	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
 	document, err := listener.PPdf.Generate()
 	if err != nil {

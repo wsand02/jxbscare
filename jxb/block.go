@@ -13,6 +13,9 @@ func findEnclosingBlock(ctx antlr.ParserRuleContext) string {
 		if _, ok := p.(*parser.MarotoContext); ok {
 			return "row"
 		}
+		if _, ok := p.(*parser.MarcolContext); ok {
+			return "col"
+		}
 	}
 	return "global"
 }

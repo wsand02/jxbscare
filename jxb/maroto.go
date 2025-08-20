@@ -10,6 +10,8 @@ import (
 	"github.com/wsand02/jxbscare/parser"
 )
 
+const MAROTO_MAX_WIDTH = 12
+
 func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 	fmt.Println("ENTER MAROTO")
 	tsl.ColsToAdd = []core.Col{}
@@ -38,12 +40,12 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 func (tsl *TreeShapeListener) MarotoInsertRec(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
 		tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(idk.Data, props.Text{
-			Align: AlignmentToProp(AlignmentToAlignment(ctx)),
+			Align: CtxToAlign(ctx),
 			Top:   tsl.InsertCounter,
 		}))
 		fmt.Println(idk.MarotoNodeType)
 		tsl.MarotoInsertRec(ctx, idk.Children)
-		tsl.InsertCounter += 4
+		tsl.InsertCounter += tsl.LineSpacing
 	}
 }
 
@@ -63,18 +65,12 @@ func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
 // 	return "global"
 // }
 
-// func (tsl *TreeShapeListener) AddStuffRecRow(CVData map[string]Aboowlock) {
-// 	for _, idk := range CVData {
-// 		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), idk.Data, AlignmentToProp(tsl.ColAlign)))
-// 		fmt.Println(idk.MarotoNodeType)
-// 		tsl.AddStuffRecRow(idk.Children)
-// 	}
-// }
-
-// func (tsl *TreeShapeListener) AddStuffRecDirect(CVData map[string]Aboowlock) {
-// 	for _, idk := range CVData {
-// 		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data, AlignmentToProp(tsl.ColAlign)))
-// 		fmt.Println(idk.MarotoNodeType)
-// 		tsl.AddStuffRecRow(idk.Children)
-// 	}
-// }
+func (tsl *TreeShapeListener) AddStuffRecDirect(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
+	for _, idk := range CVData {
+		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data, props.Text{
+			Align: CtxToAlign(ctx),
+		}))
+		fmt.Println(idk.MarotoNodeType)
+		tsl.AddStuffRecDirect(ctx, idk.Children)
+	}
+}

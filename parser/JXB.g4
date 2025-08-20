@@ -16,10 +16,10 @@ block
   : BEGIN STRING NL assignment* END STRING NL 
   ;
 insert
-  : INSERT (KEYWORD | STRING) ALIGNMENT? NL
+  : INSERT (KEYWORD | HR | STRING | BR ) ALIGNMENT? NL
   ;
 maroto
-  : ROW '{' marcol* '}' NL
+  : ROW marcol* '.' NL
   ;
 marcol
   : COL insert
@@ -55,6 +55,9 @@ ROW
   ;
 COL
   : 'col'
+  ;
+HR
+  : 'hr'
   ;
 fragment ALPHA
   : [A-Za-z]
