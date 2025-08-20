@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/johnfercher/maroto/v2/pkg/components/text"
+	"github.com/johnfercher/maroto/v2/pkg/core"
 	"github.com/wsand02/jxbscare/parser"
 )
 
@@ -30,19 +31,15 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 			tsl.ColAlign = Left
 		}
 	}
-	if parent == "row" {
-		tsl.InsertIntoRowDry(ctx)
-	}
 }
 
 func (tsl *TreeShapeListener) ExitInsert(ctx *parser.InsertContext) {
 	fmt.Println(tsl.InsertCounter)
 	fmt.Println(ctx.GetText())
 	parent := findEnclosingBlock(ctx)
-	if parent == "row" {
-		tsl.InsertIntoRow(ctx)
-	} else {
+	if parent == "global" {
 		tsl.InsertDirectly(ctx)
+		tsl.ColsToAdd = []core.Col{}
 	}
 }
 
@@ -64,6 +61,15 @@ func (tsl *TreeShapeListener) GetMyWidth() int {
 	return width
 }
 
+func CalcWidth(col int) int {
+	width := 12
+	if col > 0 {
+		width = 12 / col
+	}
+	fmt.Printf("Width: 12 / %d = %d \n", col, width)
+	return width
+}
+
 // todo count all children from parent aka count all children in row...
 
 func (tsl *TreeShapeListener) InsertIntoRow(ctx *parser.InsertContext) {
@@ -71,14 +77,6 @@ func (tsl *TreeShapeListener) InsertIntoRow(ctx *parser.InsertContext) {
 		tsl.ColsToAdd = append(tsl.ColsToAdd, text.NewCol(tsl.GetMyWidth(), tsl.CVData[ctx.KEYWORD().GetText()].Data, AlignmentToProp(tsl.ColAlign)))
 	} else if ctx.STRING() != nil {
 		tsl.AddStuffRecRow(tsl.CVData[ctx.STRING().GetText()].Children)
-	}
-}
-
-func (tsl *TreeShapeListener) InsertIntoRowDry(ctx *parser.InsertContext) {
-	if ctx.KEYWORD() != nil {
-		tsl.InsertCounter++
-	} else if ctx.STRING() != nil {
-		tsl.AddStuffRecRowDry(tsl.CVData[ctx.STRING().GetText()].Children)
 	}
 }
 

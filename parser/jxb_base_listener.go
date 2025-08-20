@@ -56,3 +56,9 @@ func (s *BaseJXBListener) EnterMaroto(ctx *MarotoContext) {}
 
 // ExitMaroto is called when production maroto is exited.
 func (s *BaseJXBListener) ExitMaroto(ctx *MarotoContext) {}
+
+// EnterMarcol is called when production marcol is entered.
+func (s *BaseJXBListener) EnterMarcol(ctx *MarcolContext) {}
+
+// ExitMarcol is called when production marcol is exited.
+func (s *BaseJXBListener) ExitMarcol(ctx *MarcolContext) {}

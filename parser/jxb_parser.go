@@ -41,38 +41,40 @@ func jxbParserInit() {
 	}
 	staticData.RuleNames = []string{
 		"document", "statement", "assignment", "block", "insert", "maroto",
+		"marcol",
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 10, 72, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
-		4, 2, 5, 7, 5, 1, 0, 5, 0, 14, 8, 0, 10, 0, 12, 0, 17, 9, 0, 1, 0, 1, 0,
-		1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 25, 8, 1, 1, 2, 1, 2, 5, 2, 29, 8, 2, 10,
-		2, 12, 2, 32, 9, 2, 1, 2, 1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 40, 8, 3,
-		10, 3, 12, 3, 43, 9, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1, 4, 3, 4,
-		52, 8, 4, 1, 4, 1, 4, 1, 5, 1, 5, 1, 5, 1, 5, 5, 5, 60, 8, 5, 10, 5, 12,
-		5, 63, 9, 5, 5, 5, 65, 8, 5, 10, 5, 12, 5, 68, 9, 5, 1, 5, 1, 5, 1, 5,
-		0, 0, 6, 0, 2, 4, 6, 8, 10, 0, 1, 2, 0, 4, 4, 8, 8, 74, 0, 15, 1, 0, 0,
-		0, 2, 24, 1, 0, 0, 0, 4, 26, 1, 0, 0, 0, 6, 35, 1, 0, 0, 0, 8, 48, 1, 0,
-		0, 0, 10, 55, 1, 0, 0, 0, 12, 14, 3, 2, 1, 0, 13, 12, 1, 0, 0, 0, 14, 17,
-		1, 0, 0, 0, 15, 13, 1, 0, 0, 0, 15, 16, 1, 0, 0, 0, 16, 18, 1, 0, 0, 0,
-		17, 15, 1, 0, 0, 0, 18, 19, 5, 0, 0, 1, 19, 1, 1, 0, 0, 0, 20, 25, 3, 4,
-		2, 0, 21, 25, 3, 6, 3, 0, 22, 25, 3, 8, 4, 0, 23, 25, 3, 10, 5, 0, 24,
-		20, 1, 0, 0, 0, 24, 21, 1, 0, 0, 0, 24, 22, 1, 0, 0, 0, 24, 23, 1, 0, 0,
-		0, 25, 3, 1, 0, 0, 0, 26, 30, 5, 4, 0, 0, 27, 29, 5, 8, 0, 0, 28, 27, 1,
-		0, 0, 0, 29, 32, 1, 0, 0, 0, 30, 28, 1, 0, 0, 0, 30, 31, 1, 0, 0, 0, 31,
-		33, 1, 0, 0, 0, 32, 30, 1, 0, 0, 0, 33, 34, 5, 10, 0, 0, 34, 5, 1, 0, 0,
-		0, 35, 36, 5, 1, 0, 0, 36, 37, 5, 8, 0, 0, 37, 41, 5, 10, 0, 0, 38, 40,
-		3, 4, 2, 0, 39, 38, 1, 0, 0, 0, 40, 43, 1, 0, 0, 0, 41, 39, 1, 0, 0, 0,
-		41, 42, 1, 0, 0, 0, 42, 44, 1, 0, 0, 0, 43, 41, 1, 0, 0, 0, 44, 45, 5,
-		2, 0, 0, 45, 46, 5, 8, 0, 0, 46, 47, 5, 10, 0, 0, 47, 7, 1, 0, 0, 0, 48,
-		49, 5, 3, 0, 0, 49, 51, 7, 0, 0, 0, 50, 52, 5, 5, 0, 0, 51, 50, 1, 0, 0,
-		0, 51, 52, 1, 0, 0, 0, 52, 53, 1, 0, 0, 0, 53, 54, 5, 10, 0, 0, 54, 9,
-		1, 0, 0, 0, 55, 56, 5, 6, 0, 0, 56, 66, 5, 10, 0, 0, 57, 61, 5, 7, 0, 0,
-		58, 60, 5, 3, 0, 0, 59, 58, 1, 0, 0, 0, 60, 63, 1, 0, 0, 0, 61, 59, 1,
-		0, 0, 0, 61, 62, 1, 0, 0, 0, 62, 65, 1, 0, 0, 0, 63, 61, 1, 0, 0, 0, 64,
-		57, 1, 0, 0, 0, 65, 68, 1, 0, 0, 0, 66, 64, 1, 0, 0, 0, 66, 67, 1, 0, 0,
-		0, 67, 69, 1, 0, 0, 0, 68, 66, 1, 0, 0, 0, 69, 70, 5, 10, 0, 0, 70, 11,
-		1, 0, 0, 0, 7, 15, 24, 30, 41, 51, 61, 66,
+		4, 1, 10, 74, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 2, 5, 7, 5, 2, 6, 7, 6, 1, 0, 5, 0, 16, 8, 0, 10, 0, 12, 0, 19, 9, 0,
+		1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 27, 8, 1, 1, 2, 1, 2, 5, 2, 31,
+		8, 2, 10, 2, 12, 2, 34, 9, 2, 1, 2, 1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3,
+		42, 8, 3, 10, 3, 12, 3, 45, 9, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1,
+		4, 3, 4, 54, 8, 4, 1, 4, 1, 4, 1, 5, 1, 5, 5, 5, 60, 8, 5, 10, 5, 12, 5,
+		63, 9, 5, 1, 5, 1, 5, 1, 6, 1, 6, 5, 6, 69, 8, 6, 10, 6, 12, 6, 72, 9,
+		6, 1, 6, 0, 0, 7, 0, 2, 4, 6, 8, 10, 12, 0, 1, 2, 0, 4, 4, 8, 8, 75, 0,
+		17, 1, 0, 0, 0, 2, 26, 1, 0, 0, 0, 4, 28, 1, 0, 0, 0, 6, 37, 1, 0, 0, 0,
+		8, 50, 1, 0, 0, 0, 10, 57, 1, 0, 0, 0, 12, 66, 1, 0, 0, 0, 14, 16, 3, 2,
+		1, 0, 15, 14, 1, 0, 0, 0, 16, 19, 1, 0, 0, 0, 17, 15, 1, 0, 0, 0, 17, 18,
+		1, 0, 0, 0, 18, 20, 1, 0, 0, 0, 19, 17, 1, 0, 0, 0, 20, 21, 5, 0, 0, 1,
+		21, 1, 1, 0, 0, 0, 22, 27, 3, 4, 2, 0, 23, 27, 3, 6, 3, 0, 24, 27, 3, 8,
+		4, 0, 25, 27, 3, 10, 5, 0, 26, 22, 1, 0, 0, 0, 26, 23, 1, 0, 0, 0, 26,
+		24, 1, 0, 0, 0, 26, 25, 1, 0, 0, 0, 27, 3, 1, 0, 0, 0, 28, 32, 5, 4, 0,
+		0, 29, 31, 5, 8, 0, 0, 30, 29, 1, 0, 0, 0, 31, 34, 1, 0, 0, 0, 32, 30,
+		1, 0, 0, 0, 32, 33, 1, 0, 0, 0, 33, 35, 1, 0, 0, 0, 34, 32, 1, 0, 0, 0,
+		35, 36, 5, 10, 0, 0, 36, 5, 1, 0, 0, 0, 37, 38, 5, 1, 0, 0, 38, 39, 5,
+		8, 0, 0, 39, 43, 5, 10, 0, 0, 40, 42, 3, 4, 2, 0, 41, 40, 1, 0, 0, 0, 42,
+		45, 1, 0, 0, 0, 43, 41, 1, 0, 0, 0, 43, 44, 1, 0, 0, 0, 44, 46, 1, 0, 0,
+		0, 45, 43, 1, 0, 0, 0, 46, 47, 5, 2, 0, 0, 47, 48, 5, 8, 0, 0, 48, 49,
+		5, 10, 0, 0, 49, 7, 1, 0, 0, 0, 50, 51, 5, 3, 0, 0, 51, 53, 7, 0, 0, 0,
+		52, 54, 5, 5, 0, 0, 53, 52, 1, 0, 0, 0, 53, 54, 1, 0, 0, 0, 54, 55, 1,
+		0, 0, 0, 55, 56, 5, 10, 0, 0, 56, 9, 1, 0, 0, 0, 57, 61, 5, 6, 0, 0, 58,
+		60, 3, 12, 6, 0, 59, 58, 1, 0, 0, 0, 60, 63, 1, 0, 0, 0, 61, 59, 1, 0,
+		0, 0, 61, 62, 1, 0, 0, 0, 62, 64, 1, 0, 0, 0, 63, 61, 1, 0, 0, 0, 64, 65,
+		5, 10, 0, 0, 65, 11, 1, 0, 0, 0, 66, 70, 5, 7, 0, 0, 67, 69, 3, 8, 4, 0,
+		68, 67, 1, 0, 0, 0, 69, 72, 1, 0, 0, 0, 70, 68, 1, 0, 0, 0, 70, 71, 1,
+		0, 0, 0, 71, 13, 1, 0, 0, 0, 72, 70, 1, 0, 0, 0, 7, 17, 26, 32, 43, 53,
+		61, 70,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -131,6 +133,7 @@ const (
 	JXBParserRULE_block      = 3
 	JXBParserRULE_insert     = 4
 	JXBParserRULE_maroto     = 5
+	JXBParserRULE_marcol     = 6
 )
 
 // IDocumentContext is an interface to support dynamic dispatch.
@@ -252,7 +255,7 @@ func (p *JXBParser) Document() (localctx IDocumentContext) {
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(15)
+	p.SetState(17)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -261,11 +264,11 @@ func (p *JXBParser) Document() (localctx IDocumentContext) {
 
 	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&90) != 0 {
 		{
-			p.SetState(12)
+			p.SetState(14)
 			p.Statement()
 		}
 
-		p.SetState(17)
+		p.SetState(19)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -273,7 +276,7 @@ func (p *JXBParser) Document() (localctx IDocumentContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(18)
+		p.SetState(20)
 		p.Match(JXBParserEOF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -430,7 +433,7 @@ func (s *StatementContext) ExitRule(listener antlr.ParseTreeListener) {
 func (p *JXBParser) Statement() (localctx IStatementContext) {
 	localctx = NewStatementContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 2, JXBParserRULE_statement)
-	p.SetState(24)
+	p.SetState(26)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -440,28 +443,28 @@ func (p *JXBParser) Statement() (localctx IStatementContext) {
 	case JXBParserKEYWORD:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(20)
+			p.SetState(22)
 			p.Assignment()
 		}
 
 	case JXBParserBEGIN:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(21)
+			p.SetState(23)
 			p.Block()
 		}
 
 	case JXBParserINSERT:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(22)
+			p.SetState(24)
 			p.Insert()
 		}
 
 	case JXBParserROW:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(23)
+			p.SetState(25)
 			p.Maroto()
 		}
 
@@ -575,14 +578,14 @@ func (p *JXBParser) Assignment() (localctx IAssignmentContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(26)
+		p.SetState(28)
 		p.Match(JXBParserKEYWORD)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(30)
+	p.SetState(32)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -591,7 +594,7 @@ func (p *JXBParser) Assignment() (localctx IAssignmentContext) {
 
 	for _la == JXBParserSTRING {
 		{
-			p.SetState(27)
+			p.SetState(29)
 			p.Match(JXBParserSTRING)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -599,7 +602,7 @@ func (p *JXBParser) Assignment() (localctx IAssignmentContext) {
 			}
 		}
 
-		p.SetState(32)
+		p.SetState(34)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -607,7 +610,7 @@ func (p *JXBParser) Assignment() (localctx IAssignmentContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(33)
+		p.SetState(35)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -773,7 +776,7 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(35)
+		p.SetState(37)
 		p.Match(JXBParserBEGIN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -781,7 +784,7 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 		}
 	}
 	{
-		p.SetState(36)
+		p.SetState(38)
 		p.Match(JXBParserSTRING)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -789,14 +792,14 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 		}
 	}
 	{
-		p.SetState(37)
+		p.SetState(39)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(41)
+	p.SetState(43)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -805,11 +808,11 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 
 	for _la == JXBParserKEYWORD {
 		{
-			p.SetState(38)
+			p.SetState(40)
 			p.Assignment()
 		}
 
-		p.SetState(43)
+		p.SetState(45)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -817,7 +820,7 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(44)
+		p.SetState(46)
 		p.Match(JXBParserEND)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -825,7 +828,7 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 		}
 	}
 	{
-		p.SetState(45)
+		p.SetState(47)
 		p.Match(JXBParserSTRING)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -833,7 +836,7 @@ func (p *JXBParser) Block() (localctx IBlockContext) {
 		}
 	}
 	{
-		p.SetState(46)
+		p.SetState(48)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -951,7 +954,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(48)
+		p.SetState(50)
 		p.Match(JXBParserINSERT)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -959,7 +962,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 		}
 	}
 	{
-		p.SetState(49)
+		p.SetState(51)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(_la == JXBParserKEYWORD || _la == JXBParserSTRING) {
@@ -969,7 +972,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 			p.Consume()
 		}
 	}
-	p.SetState(51)
+	p.SetState(53)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -978,7 +981,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 
 	if _la == JXBParserALIGNMENT {
 		{
-			p.SetState(50)
+			p.SetState(52)
 			p.Match(JXBParserALIGNMENT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -988,7 +991,7 @@ func (p *JXBParser) Insert() (localctx IInsertContext) {
 
 	}
 	{
-		p.SetState(53)
+		p.SetState(55)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1018,12 +1021,9 @@ type IMarotoContext interface {
 
 	// Getter signatures
 	ROW() antlr.TerminalNode
-	AllNL() []antlr.TerminalNode
-	NL(i int) antlr.TerminalNode
-	AllCOL() []antlr.TerminalNode
-	COL(i int) antlr.TerminalNode
-	AllINSERT() []antlr.TerminalNode
-	INSERT(i int) antlr.TerminalNode
+	NL() antlr.TerminalNode
+	AllMarcol() []IMarcolContext
+	Marcol(i int) IMarcolContext
 
 	// IsMarotoContext differentiates from other interfaces.
 	IsMarotoContext()
@@ -1065,28 +1065,49 @@ func (s *MarotoContext) ROW() antlr.TerminalNode {
 	return s.GetToken(JXBParserROW, 0)
 }
 
-func (s *MarotoContext) AllNL() []antlr.TerminalNode {
-	return s.GetTokens(JXBParserNL)
+func (s *MarotoContext) NL() antlr.TerminalNode {
+	return s.GetToken(JXBParserNL, 0)
 }
 
-func (s *MarotoContext) NL(i int) antlr.TerminalNode {
-	return s.GetToken(JXBParserNL, i)
+func (s *MarotoContext) AllMarcol() []IMarcolContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IMarcolContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IMarcolContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IMarcolContext); ok {
+			tst[i] = t.(IMarcolContext)
+			i++
+		}
+	}
+
+	return tst
 }
 
-func (s *MarotoContext) AllCOL() []antlr.TerminalNode {
-	return s.GetTokens(JXBParserCOL)
-}
+func (s *MarotoContext) Marcol(i int) IMarcolContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IMarcolContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
 
-func (s *MarotoContext) COL(i int) antlr.TerminalNode {
-	return s.GetToken(JXBParserCOL, i)
-}
+	if t == nil {
+		return nil
+	}
 
-func (s *MarotoContext) AllINSERT() []antlr.TerminalNode {
-	return s.GetTokens(JXBParserINSERT)
-}
-
-func (s *MarotoContext) INSERT(i int) antlr.TerminalNode {
-	return s.GetToken(JXBParserINSERT, i)
+	return t.(IMarcolContext)
 }
 
 func (s *MarotoContext) GetRuleContext() antlr.RuleContext {
@@ -1116,22 +1137,14 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(55)
+		p.SetState(57)
 		p.Match(JXBParserROW)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	{
-		p.SetState(56)
-		p.Match(JXBParserNL)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(66)
+	p.SetState(61)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1140,39 +1153,11 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 
 	for _la == JXBParserCOL {
 		{
-			p.SetState(57)
-			p.Match(JXBParserCOL)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		p.SetState(61)
-		p.GetErrorHandler().Sync(p)
-		if p.HasError() {
-			goto errorExit
-		}
-		_la = p.GetTokenStream().LA(1)
-
-		for _la == JXBParserINSERT {
-			{
-				p.SetState(58)
-				p.Match(JXBParserINSERT)
-				if p.HasError() {
-					// Recognition error - abort rule
-					goto errorExit
-				}
-			}
-
-			p.SetState(63)
-			p.GetErrorHandler().Sync(p)
-			if p.HasError() {
-				goto errorExit
-			}
-			_la = p.GetTokenStream().LA(1)
+			p.SetState(58)
+			p.Marcol()
 		}
 
-		p.SetState(68)
+		p.SetState(63)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1180,12 +1165,173 @@ func (p *JXBParser) Maroto() (localctx IMarotoContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(69)
+		p.SetState(64)
 		p.Match(JXBParserNL)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IMarcolContext is an interface to support dynamic dispatch.
+type IMarcolContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	COL() antlr.TerminalNode
+	AllInsert() []IInsertContext
+	Insert(i int) IInsertContext
+
+	// IsMarcolContext differentiates from other interfaces.
+	IsMarcolContext()
+}
+
+type MarcolContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyMarcolContext() *MarcolContext {
+	var p = new(MarcolContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = JXBParserRULE_marcol
+	return p
+}
+
+func InitEmptyMarcolContext(p *MarcolContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = JXBParserRULE_marcol
+}
+
+func (*MarcolContext) IsMarcolContext() {}
+
+func NewMarcolContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *MarcolContext {
+	var p = new(MarcolContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = JXBParserRULE_marcol
+
+	return p
+}
+
+func (s *MarcolContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *MarcolContext) COL() antlr.TerminalNode {
+	return s.GetToken(JXBParserCOL, 0)
+}
+
+func (s *MarcolContext) AllInsert() []IInsertContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IInsertContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IInsertContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IInsertContext); ok {
+			tst[i] = t.(IInsertContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *MarcolContext) Insert(i int) IInsertContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IInsertContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IInsertContext)
+}
+
+func (s *MarcolContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *MarcolContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *MarcolContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JXBListener); ok {
+		listenerT.EnterMarcol(s)
+	}
+}
+
+func (s *MarcolContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JXBListener); ok {
+		listenerT.ExitMarcol(s)
+	}
+}
+
+func (p *JXBParser) Marcol() (localctx IMarcolContext) {
+	localctx = NewMarcolContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 12, JXBParserRULE_marcol)
+	var _la int
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(66)
+		p.Match(JXBParserCOL)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(70)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for _la == JXBParserINSERT {
+		{
+			p.SetState(67)
+			p.Insert()
+		}
+
+		p.SetState(72)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
 	}
 
 errorExit:

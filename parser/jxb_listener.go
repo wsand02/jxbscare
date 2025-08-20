@@ -26,6 +26,9 @@ type JXBListener interface {
 	// EnterMaroto is called when entering the maroto production.
 	EnterMaroto(c *MarotoContext)
 
+	// EnterMarcol is called when entering the marcol production.
+	EnterMarcol(c *MarcolContext)
+
 	// ExitDocument is called when exiting the document production.
 	ExitDocument(c *DocumentContext)
 
@@ -43,4 +46,7 @@ type JXBListener interface {
 
 	// ExitMaroto is called when exiting the maroto production.
 	ExitMaroto(c *MarotoContext)
+
+	// ExitMarcol is called when exiting the marcol production.
+	ExitMarcol(c *MarcolContext)
 }
