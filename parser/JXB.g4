@@ -59,6 +59,9 @@ COL
 HR
   : 'hr'
   ;
+BR
+  : 'br'
+  ;
 fragment ALPHA
   : [A-Za-z]
   ;

@@ -67,7 +67,7 @@ func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
 
 func (tsl *TreeShapeListener) AddStuffRecDirect(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.PPdf.AddAutoRow(text.NewCol(12, idk.Data, props.Text{
+		tsl.PPdf.AddAutoRow(text.NewCol(MAROTO_MAX_WIDTH, idk.Data, props.Text{
 			Align: CtxToAlign(ctx),
 		}))
 		fmt.Println(idk.MarotoNodeType)

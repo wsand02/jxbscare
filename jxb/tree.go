@@ -11,19 +11,7 @@ type Aboowlock struct {
 	MarotoNodeType string
 	Data           string
 	Children       map[string]Aboowlock
-	// OGCtx          *antlr.ParserRuleContext
 }
-
-// func kukFunktion(ctx antlr.ParserRuleContext) Aboowlock {
-// 	abowlock := Aboowlock{}
-// 	abowlock.OGCtx = &ctx
-// 	abowlock.Children = &[]Aboowlock{}
-// 	return abowlock
-// }
-
-// då måste jag kunna söka det...
-
-// this will be slow but whatever
 
 type TreeShapeListener struct {
 	*parser.BaseJXBListener
