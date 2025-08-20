@@ -49,15 +49,15 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 // 	}
 // }
 
-func (tsl *TreeShapeListener) GetMyWidth() int {
-	width := 12
-	numCols := tsl.InsertCounter
-	if numCols > 0 {
-		width = 12 / numCols
-	}
-	fmt.Printf("Width: 12 / %d = %d \n", numCols, width)
-	return width
-}
+// func (tsl *TreeShapeListener) GetMyWidth() int {
+// 	width := 12
+// 	numCols := tsl.InsertCounter
+// 	if numCols > 0 {
+// 		width = 12 / numCols
+// 	}
+// 	fmt.Printf("Width: 12 / %d = %d \n", numCols, width)
+// 	return width
+// }
 
 func CalcWidth(col int) int {
 	width := 12

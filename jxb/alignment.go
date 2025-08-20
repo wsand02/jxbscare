@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/johnfercher/maroto/v2/pkg/consts/align"
-	"github.com/johnfercher/maroto/v2/pkg/props"
 )
 
 type Alignment int
@@ -17,38 +16,27 @@ const (
 	Bottom
 )
 
-func AlignmentToProp(a Alignment) props.Text {
+// yeah idfk
+func AlignmentToProp(a Alignment) align.Type {
 	switch a {
 	case Left:
 		fmt.Println("l")
-		return props.Text{
-			Align: align.Left,
-		}
+		return align.Left
 	case Right:
 		fmt.Println("r")
-		return props.Text{
-			Align: align.Right,
-		}
+		return align.Right
 	case Center:
 		fmt.Println("c")
-		return props.Text{
-			Align: align.Center,
-		}
+		return align.Center
 	case Top:
 		fmt.Println("t")
-		return props.Text{
-			Align: align.Top,
-		}
+		return align.Top
 	case Bottom:
 		fmt.Println("b")
-		return props.Text{
-			Align: align.Bottom,
-		}
+		return align.Bottom
 	default:
 		fmt.Println("d")
 		// default, redudant statement fight me
-		return props.Text{
-			Align: align.Left,
-		}
+		return align.Left
 	}
 }

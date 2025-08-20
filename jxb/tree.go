@@ -33,7 +33,7 @@ type TreeShapeListener struct {
 	ColAlign        Alignment
 	ColsToAdd       []core.Col
 	ComponentsToAdd []core.Component
-	InsertCounter   int
+	InsertCounter   float64
 }
 
 func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
@@ -41,5 +41,6 @@ func NewTreeShapeListener(cfg *entity.Config) *TreeShapeListener {
 	tsl.CVData = make(map[string]Aboowlock)
 	tsl.PPdf = maroto.New(cfg)
 	tsl.ColAlign = Left
+	tsl.InsertCounter = 0.0
 	return tsl
 }
