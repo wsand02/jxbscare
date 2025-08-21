@@ -36,9 +36,9 @@ insert selfie
 row insert name
 ```
 
-For more info you can read the [grammar](parser/JXB.g4).
+For more info you can read the [grammar](parser/JXB.g4), (note the grammar defined is misleading to due to custom handling.)
 
-### Example output
+### Output
 coming soon...
 
 ## License
