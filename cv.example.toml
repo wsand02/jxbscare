@@ -1,0 +1,112 @@
+Title = "Curriculum Vitae"
+Desc = "Professional profile of Adam Jensen"
+Lang = "EN"
+
+[AboutMe]
+Selfie = "idkf.png"
+Name = "Adam Jensen"
+Address = "Detroit, Michigan, USA"
+Phone = "+1 555 123 4567"
+Email = "adam.jensen@example.com"
+Website = "adamjensen.example.com"
+LinkedIn = "adam-jensen"
+Github = "adamjensen"
+Summary = "Experienced security specialist with extensive expertise in augmentations, cyber security, and tactical operations."
+
+[[WorkExperience]]
+Title = "Head of Security"
+Company = "Sarif Industries"
+Start = "2007-05"
+End = "2015-08"
+Location = "Detroit"
+Description = "Led corporate security operations, incident response, and tactical deployments for high-profile projects."
+
+[[WorkExperience]]
+Title = "Security Consultant"
+Company = "Interpol Cybercrime Division"
+Start = "2016-01"
+End = "2020-12"
+Location = "Geneva"
+Description = "Advised international agencies on cyber warfare, augment safety, and digital infiltration detection."
+
+[[Publications]]
+Title = "Human Augmentations and Cybersecurity Risks"
+Link = "https://dx.doi.org/10.fake/augment-sec"
+Year = 2018
+Summary = "A research article analyzing the intersection of human augmentation technology and cyber vulnerabilities."
+
+[[Projects]]
+Name = "Augmented Security Framework"
+Start = "2014-06"
+End = "2015-05"
+Description = "Developed a security framework for safeguarding augmentation firmware against tampering."
+Technologies = ["Go", "Rust", "Linux", "Cryptography"]
+
+[[Projects]]
+Name = "Cybernetic Intrusion Detection System"
+Start = "2017-03"
+End = "2018-07"
+Description = "Prototype system for detecting unauthorized access attempts into human augmentation interfaces."
+Technologies = ["Python", "TensorFlow", "Kubernetes"]
+
+[[Education]]
+Name = "Bachelor of Science in Criminal Justice"
+Start = "2000"
+End = "2004"
+School = "Wayne State University"
+Desc = "Studied criminology, law enforcement practices, and cybercrime."
+
+[[Education]]
+Name = "Cybersecurity Certification"
+Start = "2005"
+End = "2006"
+School = "MIT Professional Education"
+Desc = "Focused on digital security, cryptography, and network defense."
+
+[[Skills]]
+Name = "Go"
+Category = 0 # Language
+
+[[Skills]]
+Name = "Rust"
+Category = 0 # Language
+
+[[Skills]]
+Name = "TensorFlow"
+Category = 1 # Framework
+
+[[Skills]]
+Name = "Docker"
+Category = 2 # Tool
+
+[[Skills]]
+Name = "Linux"
+Category = 2 # Tool
+
+[[Skills]]
+Name = "Cybernetics"
+Category = 3 # Other
+
+[[Languages]]
+Name = "English"
+Summary = "Native proficiency"
+
+[[Languages]]
+Name = "French"
+Summary = "Intermediate"
+
+[[Languages]]
+Name = "Czech"
+Summary = "Basic understanding"
+
+[[References]]
+Name = "David Sarif"
+Company = "Sarif Industries"
+Phone = "+1 555 987 6543"
+Email = "dsarif@example.com"
+
+[[References]]
+Name = "Francis Pritchard"
+Company = "Interpol Cybercrime Division"
+Phone = "+41 22 555 1212"
+Email = "fpritchard@example.org"

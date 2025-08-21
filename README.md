@@ -1,27 +1,41 @@
 # Jxbscare
+*A cursed 👻 CV-to-PDF generator written in Go*
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/wsand02/jxbscare)](https://goreportcard.com/report/github.com/wsand02/jxbscare)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/wsand02/jxbscare)
+[![GitHub](https://img.shields.io/github/license/wsand02/jxbscare)](https://github.com/wsand02/jxbscare/blob/master/LICENSE)
+[![GitHub repo size](https://img.shields.io/github/repo-size/wsand02/jxbscare)](https://github.com/wsand02/jxbscare/)
 
 ## Overview
-Jxbscare <small>(I censored the slur for you)</small> is a CV-to-PDF generator using TOML and Maroto and is implemented in Go.
+Jxbscare (j-word censored for fellow CS student friendliness) is a CV-to-PDF generator using TOML and Maroto and is implemented in Go.
 
-### Disclaimer
-Note this project is pretty experimental at the moment and has only been really tested with A4 papersize. *It may also break if you look at it wrong and requires thorough future testing.*
-It also used consist of a custom DSL made with ANTLR but that has since been scrapped in favor of just using TOML and hardcoding the CV layout. You can find the remains of my grandiose failure in the git history :DDD
+Originally this project had its own custom DSL powered by ANTLR, but that dream was scrapped in favor of TOML and hardcoded layouts. The remains of that grand experiment can still be found in the git history.
+
+## ⚠️ Disclaimer  
+This project is *experimental*.  
+- Only tested on **A4 paper size** (I'm not even sure the generated PDFs conform to the A4 paper size 😅).  
+- May break if you look at it wrong.
+- Needs much more testing and refinement.
 
 ## Installation
-I don't believe in distributing executables, you will have to build it from source.
+I don't believe in distributing binaries (I don't have the means to sign them), you'll need to build it yourself:
 ```
-git clone https://github.com/wsand02/jxbscare
+git clone https://github.com/wsand02/jxbscare.git
 cd jxbscare
 go build
 ```
 
 ## Usage
 ```
-./jxbscare <input> <output> 
+./jxbscare <input.toml> <output.pdf> 
 ```
+* `<input.toml>` CV data in TOML format
+* `<output.pdf>` Generated CV in PDF format
 
 ## Example
-coming soon...
+Check out the provided [example toml](cv.example.toml) featuring Adam Jensen (he definitely didn't ask for this). **⚠️ Note that some fields are yet to be implemented.**
+
+![Example Output](docs/example_output.jpg)
 
 
 ## License
