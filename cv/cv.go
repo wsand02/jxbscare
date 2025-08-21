@@ -79,6 +79,16 @@ type TechnicalSkill struct {
 	Category TechnicalSkillCategory
 }
 
+func (cv CV) GetTechnicalSkillsByCategory(category TechnicalSkillCategory) []string {
+	var skills []string
+	for _, skill := range cv.Skills {
+		if skill.Category == category {
+			skills = append(skills, skill.Name)
+		}
+	}
+	return skills
+}
+
 type SpokenLanguage struct {
 	Name    string
 	Summary string // how good you are at the language
