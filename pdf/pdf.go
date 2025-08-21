@@ -48,3 +48,47 @@ func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64)
 		fmt.Println("whoops")
 	}
 }
+
+func GeneratePDF(filename string) {
+
+}
+
+/*
+right row
+selfie idkf.png
+name Anders Andersson
+
+left row
+address Gatan 200F, 66633, Atlanta
+phone 46777777777
+email example@example.com
+website example.com
+linkedin
+github
+
+hr
+*/
+func GenerateHeader() {}
+
+/*
+job:
+title
+company
+start
+end
+location
+desc
+*/
+func GenerateWorkExperience() {}
+
+func GeneratePublications() {}
+
+func GenerateProjects() {}
+
+func GenerateEducation() {}
+
+func GenerateTechnicalSkills() {}
+
+func GenerateLanguages() {}
+
+func GenerateReferences() {}

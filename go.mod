@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/f-amaral/go-async v0.3.0 // indirect
 	github.com/google/uuid v1.5.0 // indirect
