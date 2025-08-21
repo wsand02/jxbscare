@@ -27,7 +27,11 @@ func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64)
 	paper := pagesize.Type(strings.ToLower(paperSize))
 	fmt.Println(paperSize)
 
-	cfg := config.NewBuilder().WithPageSize(paper).Build()
+	cfg := config.NewBuilder().
+		WithLeftMargin(15).
+		WithRightMargin(10).
+		WithTopMargin(15).
+		WithPageSize(paper).Build()
 	listener := jxb.NewTreeShapeListener(cfg, lineSpacing)
 	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
 	document, err := listener.PPdf.Generate()

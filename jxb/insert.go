@@ -28,8 +28,10 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 }
 
 func (tsl *TreeShapeListener) InsertHR() {
-	tsl.PPdf.AddRow(10, col.New(MAROTO_MAX_WIDTH))
-	tsl.PPdf.AddRow(20, line.NewCol(MAROTO_MAX_WIDTH))
+	tsl.PPdf.AddRow(3, col.New(MAROTO_MAX_WIDTH))
+	tsl.PPdf.AddRow(6, line.NewCol(MAROTO_MAX_WIDTH, props.Line{
+		SizePercent: 100,
+	}))
 }
 
 func (tsl *TreeShapeListener) InsertBR() {
