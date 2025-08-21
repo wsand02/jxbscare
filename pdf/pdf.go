@@ -1,14 +1,14 @@
 package pdf
 
 import (
-	"fmt"
-	"strings"
+	"log"
 
-	"github.com/antlr4-go/antlr/v4"
+	"github.com/johnfercher/maroto/v2"
+
 	"github.com/johnfercher/maroto/v2/pkg/config"
 	"github.com/johnfercher/maroto/v2/pkg/consts/pagesize"
-	"github.com/wsand02/jxbscare/jxb"
-	"github.com/wsand02/jxbscare/parser"
+	"github.com/johnfercher/maroto/v2/pkg/core"
+	"github.com/wsand02/jxbscare/cv"
 )
 
 const (
@@ -20,31 +20,27 @@ const (
 // träd?
 // äta träd https://dota2.fandom.com/wiki/Tango
 
-func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64) {
-	input, _ := antlr.NewFileStream(filename)
-
-	lexer := parser.NewJXBLexer(input)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	p := parser.NewJXBParser(stream)
-	p.AddErrorListener(antlr.NewDiagnosticErrorListener(true))
-	tree := p.Document()
-
-	paper := pagesize.Type(strings.ToLower(paperSize))
-	fmt.Println(paperSize)
-
+func initMaroto() core.Maroto {
 	cfg := config.NewBuilder().
 		WithLeftMargin(LEFT_MARGIN).
 		WithRightMargin(RIGHT_MARGIN).
 		WithTopMargin(TOP_MARGIN).
-		WithPageSize(paper).Build()
-	listener := jxb.NewTreeShapeListener(cfg, lineSpacing)
-	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
-	document, err := listener.PPdf.Generate()
+		WithPageSize(pagesize.A4).Build()
+	return maroto.New(cfg)
+}
+
+func GeneratePDF(input string, output string) {
+	pdf := initMaroto()
+	cuvi := cv.ParseCV(input)
+	rows := []core.Row{}
+	rows = appendAllTheThings(rows, cuvi)
+	pdf.AddRows(rows...)
+	document, err := pdf.Generate()
 	if err != nil {
-		fmt.Printf("Error generating PDF: %s\n", err)
+		log.Fatal(err)
 	}
-	err = document.Save("output.pdf")
+	err = document.Save(output)
 	if err != nil {
-		fmt.Println("whoops")
+		log.Fatal(err)
 	}
 }

@@ -1,7 +1,11 @@
 # Jxbscare
 
 ## Overview
-Jxbscare <small>(I censored the slur for you)</small> is a CV-to-PDF generator consisting of a mediocre DSL made with ANTLR and implemented in Go. These so called *jxb* files are then turned into PDFs with maroto.
+Jxbscare <small>(I censored the slur for you)</small> is a CV-to-PDF generator using TOML and Maroto and is implemented in Go.
+
+### Disclaimer
+Note this project is pretty experimental at the moment and has only been really tested with A4 papersize. *It may also break if you look at it wrong and requires thorough future testing.*
+It also used consist of a custom DSL made with ANTLR but that has since been scrapped in favor of just using TOML and hardcoding the CV layout. You can find the remains of my grandiose failure in the git history :DDD
 
 ## Installation
 I don't believe in distributing executables, you will have to build it from source.
@@ -13,33 +17,12 @@ go build
 
 ## Usage
 ```
-./jxbscare -p a4 [jxb file here]
+./jxbscare <input> <output> 
 ```
 
-## Example jxb
-<small>Any resemblance to actual events, locales, or persons is purely coincidental.</small>
-```
-cv Skitjobb
-name Anders Andersson
-selfie IMG_1573.jpeg
-
-begin contact
-address Gatan 200F, 66633, Atlanta
-phone 77777777777
-email example@example.com
-website example.com
-end contact
-
-row insert contact
-insert selfie
-
-row insert name
-```
-
-For more info you can read the [grammar](parser/JXB.g4), (note the grammar defined is misleading to due to custom handling.)
-
-### Output
+## Example
 coming soon...
+
 
 ## License
 Jxbscare is licensed under the [MIT License](LICENSE).
