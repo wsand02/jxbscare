@@ -29,9 +29,9 @@ func initMaroto() core.Maroto {
 	return maroto.New(cfg)
 }
 
-func GeneratePDF() {
+func GeneratePDF(input string, output string) {
 	pdf := initMaroto()
-	cuvi := cv.ParseCV("cv.toml")
+	cuvi := cv.ParseCV(input)
 	rows := []core.Row{}
 	rows = appendAllTheThings(rows, cuvi)
 	pdf.AddRows(rows...)
@@ -39,7 +39,7 @@ func GeneratePDF() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = document.Save("cv.pdf")
+	err = document.Save(output)
 	if err != nil {
 		log.Fatal(err)
 	}
