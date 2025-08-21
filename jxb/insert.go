@@ -10,6 +10,13 @@ import (
 	"github.com/wsand02/jxbscare/parser"
 )
 
+const (
+	HR_TOP_MARGIN = 3
+	HR_BOT_MARGIN = 6
+	HR_WIDTH_PER  = 100
+	BR_Y_SIZE     = 10
+)
+
 func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 	fmt.Println(ctx.GetText())
 	p := findEnclosingBlock(ctx)
@@ -28,14 +35,14 @@ func (tsl *TreeShapeListener) EnterInsert(ctx *parser.InsertContext) {
 }
 
 func (tsl *TreeShapeListener) InsertHR() {
-	tsl.PPdf.AddRow(3, col.New(MAROTO_MAX_WIDTH))
-	tsl.PPdf.AddRow(6, line.NewCol(MAROTO_MAX_WIDTH, props.Line{
-		SizePercent: 100,
+	tsl.PPdf.AddRow(HR_TOP_MARGIN, col.New(MAROTO_MAX_WIDTH))
+	tsl.PPdf.AddRow(HR_BOT_MARGIN, line.NewCol(MAROTO_MAX_WIDTH, props.Line{
+		SizePercent: HR_WIDTH_PER,
 	}))
 }
 
 func (tsl *TreeShapeListener) InsertBR() {
-	tsl.PPdf.AddRow(10, col.New(MAROTO_MAX_WIDTH))
+	tsl.PPdf.AddRow(BR_Y_SIZE, col.New(MAROTO_MAX_WIDTH))
 }
 
 func (tsl *TreeShapeListener) InsertDirectly(ctx *parser.InsertContext) {

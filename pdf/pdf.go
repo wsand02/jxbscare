@@ -11,11 +11,16 @@ import (
 	"github.com/wsand02/jxbscare/parser"
 )
 
+const (
+	LEFT_MARGIN  = 10
+	RIGHT_MARGIN = 10
+	TOP_MARGIN   = 15
+)
+
 // träd?
 // äta träd https://dota2.fandom.com/wiki/Tango
 
 func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64) {
-	// fmt.Printf("%s", os.Args[1])
 	input, _ := antlr.NewFileStream(filename)
 
 	lexer := parser.NewJXBLexer(input)
@@ -28,9 +33,9 @@ func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64)
 	fmt.Println(paperSize)
 
 	cfg := config.NewBuilder().
-		WithLeftMargin(15).
-		WithRightMargin(10).
-		WithTopMargin(15).
+		WithLeftMargin(LEFT_MARGIN).
+		WithRightMargin(RIGHT_MARGIN).
+		WithTopMargin(TOP_MARGIN).
 		WithPageSize(paper).Build()
 	listener := jxb.NewTreeShapeListener(cfg, lineSpacing)
 	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
