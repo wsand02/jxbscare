@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/johnfercher/maroto/v2/pkg/components/col"
+	"github.com/johnfercher/maroto/v2/pkg/components/image"
 	"github.com/johnfercher/maroto/v2/pkg/components/text"
 	"github.com/johnfercher/maroto/v2/pkg/core"
 	"github.com/johnfercher/maroto/v2/pkg/props"
@@ -23,10 +24,19 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 		tsl.ComponentsToAdd = []core.Component{}
 		ins := xcol.Insert()
 		if ins.KEYWORD() != nil {
-			tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(tsl.CVData[ins.KEYWORD().GetText()].Data, props.Text{
-				Align: AlignmentToProp(AlignmentToAlignment(ins.(*parser.InsertContext))),
-				Top:   tsl.InsertCounter,
-			}))
+			if tsl.CVData[ins.KEYWORD().GetText()].MarotoNodeType == "selfie" {
+				tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, image.NewFromFile(tsl.CVData[ins.KEYWORD().GetText()].Data, props.Rect{
+					Percent:            50,
+					JustReferenceWidth: true,
+					Center:             false,
+				}))
+			} else {
+				tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(tsl.CVData[ins.KEYWORD().GetText()].Data, props.Text{
+					Align: AlignmentToProp(AlignmentToAlignment(ins.(*parser.InsertContext))),
+					Top:   tsl.InsertCounter,
+				}))
+			}
+
 		} else if ins.STRING() != nil {
 			tsl.MarotoInsertRec(ins.(*parser.InsertContext), tsl.CVData[ins.STRING().GetText()].Children)
 		}
@@ -39,10 +49,15 @@ func (tsl *TreeShapeListener) EnterMaroto(ctx *parser.MarotoContext) {
 // differs from surface level AddStufRecRow
 func (tsl *TreeShapeListener) MarotoInsertRec(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(idk.Data, props.Text{
-			Align: CtxToAlign(ctx),
-			Top:   tsl.InsertCounter,
-		}))
+		if idk.MarotoNodeType == "selfie" {
+			tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, image.NewFromFile(idk.Data))
+		} else {
+			tsl.ComponentsToAdd = append(tsl.ComponentsToAdd, text.New(idk.Data, props.Text{
+				Align: CtxToAlign(ctx),
+				Top:   tsl.InsertCounter,
+			}))
+		}
+
 		fmt.Println(idk.MarotoNodeType)
 		tsl.MarotoInsertRec(ctx, idk.Children)
 		tsl.InsertCounter += tsl.LineSpacing
@@ -67,10 +82,14 @@ func (tsl *TreeShapeListener) ExitMaroto(ctx *parser.MarotoContext) {
 
 func (tsl *TreeShapeListener) AddStuffRecDirect(ctx *parser.InsertContext, CVData map[string]Aboowlock) {
 	for _, idk := range CVData {
-		tsl.PPdf.AddAutoRow(text.NewCol(MAROTO_MAX_WIDTH, idk.Data, props.Text{
-			Align: CtxToAlign(ctx),
-		}))
 		fmt.Println(idk.MarotoNodeType)
+		if idk.MarotoNodeType == "selfie" {
+			tsl.PPdf.AddAutoRow(image.NewFromFileCol(MAROTO_MAX_WIDTH, idk.Data))
+		} else {
+			tsl.PPdf.AddAutoRow(text.NewCol(MAROTO_MAX_WIDTH, idk.Data, props.Text{
+				Align: CtxToAlign(ctx),
+			}))
+		}
 		tsl.AddStuffRecDirect(ctx, idk.Children)
 	}
 }

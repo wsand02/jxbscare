@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/johnfercher/maroto/v2/pkg/components/col"
+	"github.com/johnfercher/maroto/v2/pkg/components/image"
 	"github.com/johnfercher/maroto/v2/pkg/components/line"
 	"github.com/johnfercher/maroto/v2/pkg/components/text"
 	"github.com/johnfercher/maroto/v2/pkg/props"
@@ -47,9 +48,17 @@ func (tsl *TreeShapeListener) InsertBR() {
 
 func (tsl *TreeShapeListener) InsertDirectly(ctx *parser.InsertContext) {
 	if ctx.KEYWORD() != nil {
-		tsl.PPdf.AddAutoRow(text.NewCol(MAROTO_MAX_WIDTH, tsl.CVData[ctx.KEYWORD().GetText()].Data, props.Text{
-			Align: CtxToAlign(ctx),
-		}))
+		if tsl.CVData[ctx.KEYWORD().GetText()].MarotoNodeType == "selfie" {
+			tsl.PPdf.AddAutoRow(image.NewFromFileCol(3, tsl.CVData[ctx.KEYWORD().GetText()].Data, props.Rect{
+				Center:  false,
+				Percent: 80,
+			}))
+		} else {
+			tsl.PPdf.AddAutoRow(text.NewCol(MAROTO_MAX_WIDTH, tsl.CVData[ctx.KEYWORD().GetText()].Data, props.Text{
+				Align: CtxToAlign(ctx),
+			}))
+		}
+
 	} else if ctx.STRING() != nil {
 		tsl.AddStuffRecDirect(ctx, tsl.CVData[ctx.STRING().GetText()].Children)
 	}
