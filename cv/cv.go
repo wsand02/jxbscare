@@ -19,6 +19,7 @@ const (
 type CV struct {
 	Title          string
 	Desc           string
+	Lang           string
 	AboutMe        Info
 	WorkExperience []WorkExp
 	Publications   []Publication
@@ -35,7 +36,8 @@ type Info struct {
 	Address  string
 	Phone    string
 	Email    string
-	Linkedin string // linkedin username
+	Website  string // personal website
+	LinkedIn string // linkedin username
 	Github   string // github username
 	Summary  string // short summary about yourself
 }

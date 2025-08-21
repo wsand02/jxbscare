@@ -1,6 +1,8 @@
 package main
 
-import "github.com/wsand02/jxbscare/cv"
+import (
+	"github.com/wsand02/jxbscare/pdf"
+)
 
 const (
 	paperSizeDesc      string  = "The size of the paper the pdf will be rendered with."
@@ -10,5 +12,5 @@ const (
 )
 
 func main() {
-	cv.ParseCV("cv.toml")
+	pdf.GeneratePDF()
 }

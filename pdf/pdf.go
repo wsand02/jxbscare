@@ -2,11 +2,22 @@ package pdf
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
+	"github.com/johnfercher/maroto/v2"
+	"github.com/johnfercher/maroto/v2/pkg/components/col"
+	"github.com/johnfercher/maroto/v2/pkg/components/image"
+	"github.com/johnfercher/maroto/v2/pkg/components/line"
+	"github.com/johnfercher/maroto/v2/pkg/components/text"
 	"github.com/johnfercher/maroto/v2/pkg/config"
+	"github.com/johnfercher/maroto/v2/pkg/consts/align"
+	"github.com/johnfercher/maroto/v2/pkg/consts/fontstyle"
 	"github.com/johnfercher/maroto/v2/pkg/consts/pagesize"
+	"github.com/johnfercher/maroto/v2/pkg/core"
+	"github.com/johnfercher/maroto/v2/pkg/props"
+	"github.com/wsand02/jxbscare/cv"
 	"github.com/wsand02/jxbscare/jxb"
 	"github.com/wsand02/jxbscare/parser"
 )
@@ -49,8 +60,23 @@ func Laboutonmaxxadlatte(filename string, paperSize string, lineSpacing float64)
 	}
 }
 
-func GeneratePDF(filename string) {
-
+func GeneratePDF() {
+	cfg := config.NewBuilder().
+		WithLeftMargin(LEFT_MARGIN).
+		WithRightMargin(RIGHT_MARGIN).
+		WithTopMargin(TOP_MARGIN).
+		WithPageSize(pagesize.A4).Build()
+	pdf := maroto.New(cfg)
+	cuvi := cv.ParseCV("cv.toml")
+	AppendHeader(pdf, cuvi)
+	document, err := pdf.Generate()
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = document.Save("cv.pdf")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 /*
@@ -68,7 +94,54 @@ github
 
 hr
 */
-func GenerateHeader() {}
+func AppendHeader(m core.Maroto, cuvi cv.CV) {
+	m.AddRow(32,
+		col.New(6).Add(
+			text.New(fmt.Sprintf("CV: %s", cuvi.AboutMe.Name), props.Text{
+				Align: align.Left,
+				Style: fontstyle.Bold,
+			}),
+			text.New(fmt.Sprintf("Address: %s", cuvi.AboutMe.Address), props.Text{
+				Top:   8,
+				Size:  8,
+				Align: align.Left,
+			}),
+			text.New(fmt.Sprintf("Phone: %s", cuvi.AboutMe.Phone), props.Text{
+				Top:   12,
+				Size:  8,
+				Align: align.Left,
+			}),
+			text.New(fmt.Sprintf("Email: %s", cuvi.AboutMe.Email), props.Text{
+				Top:   16,
+				Size:  8,
+				Align: align.Left,
+			}),
+			text.New(fmt.Sprintf("Website: %s", cuvi.AboutMe.Website), props.Text{
+				Top:   20,
+				Size:  8,
+				Align: align.Left,
+			}),
+			text.New(fmt.Sprintf("LinkedIn: %s", cuvi.AboutMe.LinkedIn), props.Text{
+				Top:   24,
+				Size:  8,
+				Align: align.Left,
+			}),
+			text.New(fmt.Sprintf("Github: %s", cuvi.AboutMe.Github), props.Text{
+				Top:   28,
+				Size:  8,
+				Align: align.Left,
+			})),
+		col.New(4),
+		image.NewFromFileCol(2, cuvi.AboutMe.Selfie, props.Rect{
+			Center:  false,
+			Percent: 100,
+		}))
+
+	m.AddRow(4, col.New(12).Add())
+	m.AddRow(6, line.NewCol(12, props.Line{
+		SizePercent: 100,
+	}))
+}
 
 /*
 job:
@@ -79,7 +152,9 @@ end
 location
 desc
 */
-func GenerateWorkExperience() {}
+func GenerateWorkExperience(m core.Maroto, cuvi cv.CV) {
+
+}
 
 func GeneratePublications() {}
 
