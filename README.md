@@ -22,12 +22,17 @@ I don't believe in distributing binaries (I don't have the means to sign them), 
 ```
 git clone https://github.com/wsand02/jxbscare.git
 cd jxbscare
-go build
+make
 ```
 
 ## Usage
+
+### Web interface
+Coming soon...
+
+### CLI
 ```
-./jxbscare <input.toml> <output.pdf> 
+./bin/jxbscare-cli <input.toml> <output.pdf> 
 ```
 * `<input.toml>` CV data in TOML format
 * `<output.pdf>` Generated CV in PDF format
