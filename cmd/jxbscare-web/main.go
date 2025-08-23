@@ -5,7 +5,5 @@ import (
 )
 
 func main() {
-	w := web.InitWeb()
-	w.InitRoutes()
-	w.StartServer()
+	web.New().StartServer()
 }
